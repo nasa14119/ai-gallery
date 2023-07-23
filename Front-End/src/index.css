@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+  font-family: YsabeasuOffice;
+  src: url(assets/Fonts/Ysabeau_Office/static/YsabeauOffice-ExtraLight.ttf);
+  font-weight:200;
+}
+@font-face {
+  font-family: YsabeasuOffice;
+  src: url(assets/Fonts/Ysabeau_Office/static/YsabeauOffice-Regular.ttf);
+  font-weight:400;
+}
+@font-face {
+  font-family: YsabeasuOffice;
+  src: url(assets/Fonts/Ysabeau_Office/static/YsabeauOffice-Medium.ttf);
+  font-weight:500;
+}
+@font-face {
+  font-family: YsabeasuOffice;
+  src: url(assets/Fonts/Ysabeau_Office/static/YsabeauOffice-Bold.ttf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: YsabeasuOffice;
+  src: url(assets/Fonts/Ysabeau_Office/static/YsabeauOffice-Black.ttf);
+  font-weight: 900;
+}
+:root{
+  --color: #ffffff; 
+  --background: #000000; 
+  --font-p: YsabeasuOffice; 
+}
+body{
+  height: minmax(100vh, 100%);
+  color: var(--color); 
+  background: var(--background); 
+  font-family: var(--font-p);
+  transition:all 750ms ease-out; 
+}
+h1{
+  font-family: YsabeasuOffice;
+  font-weight: 900;
+}
+.dark-theme{
+  --color: #ffffff;  
+  --background: #000000; 
+}
+.light-theme{
+  --color: #000000; 
+  --background:#ffffff; 
+}

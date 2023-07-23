@@ -1,0 +1,10 @@
+body:hover .trailer{
+    opacity: 1;
+}
+.trailer{
+    transition: transform 500ms ease-out, opacity 500ms ease ;
+    transition-delay: 0;
+}
+.trailer > *{
+    backdrop-filter: blur(20px);   
+}

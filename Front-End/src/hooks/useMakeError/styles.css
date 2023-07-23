@@ -1,0 +1,23 @@
+@keyframes confirmation-animation{
+    from{
+        transform: translateY(150%);
+    }
+    to{
+        transform: translate(0);
+    }
+}
+@keyframes confirmation-animation-out{
+    from{
+        transform: translateY(0);
+    }
+    to{
+        transform: translateY(150%);
+    }
+}
+.confimation[data-state="true"]{
+    animation:confirmation-animation 500ms forwards;
+}
+.confimation[data-state="false"]{
+    animation:confirmation-animation-out 500ms forwards;
+    animation-delay: 1000ms;
+}

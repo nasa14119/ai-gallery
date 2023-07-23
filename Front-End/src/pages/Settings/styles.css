@@ -1,0 +1,87 @@
+:root{
+    --background-setting: #1e2125; 
+}
+.settings-nav ul{
+    @apply flex justify-center items-center gap-x-2 text-sm md:text-2xl; 
+}
+.settings-nav li{
+    @apply py-2 px-2 md:px-5 rounded-3xl bg-slate-400/20 font-bold; 
+}
+.info-container{
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+}
+.info-container > *{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    @apply bg-slate-500/40 w-[min(200px,_100%)] aspect-square rounded-3xl mx-auto; 
+}
+@keyframes form-settings{
+    from{
+        transform: translate(-50%);
+    }
+    to{
+        transform: translate(0%);
+    }
+}
+.info-form{
+    max-width: 700px;
+    animation: forwards form-settings 750ms ease-out;
+    color: #fff;
+    display: flex;
+    position: fixed;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    @apply bg-[var(--background-setting)] rounded-3xl fixed mx-auto inset-x-5 inset-y-[10%] py-10 px-5; 
+}
+.info-form form{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.info-form label{
+    width: 100%;
+    font-size: 1.3rem;
+    @apply pt-5 font-bold; 
+}
+.info-form input{
+    width: 100%;
+    font-size: 1.3rem;
+    border-bottom: solid #34393f 2px; 
+    @apply bg-transparent outline-none px-5 py-[10px] font-normal; 
+}
+.other-options-settings{
+    @apply flex flex-col justify-center w-full px-7; 
+}
+.other-options-settings li{
+    cursor: pointer;
+    margin-top: 10px; 
+    display: grid; 
+    grid-template-columns: min(15%, 75px) 1fr; 
+    grid-template-rows: 1fr; 
+    align-items: center; 
+    @apply text-lg text-white rounded-3xl overflow-hidden; 
+}
+.other-options-settings span:first-child{
+    display: grid;
+    width: 100%;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-content: center;
+}
+.other-options-settings span:last-child{
+    padding-inline: 5%;
+    @apply text-xl; 
+}
