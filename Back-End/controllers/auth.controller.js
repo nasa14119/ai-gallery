@@ -12,7 +12,12 @@ export const login = async (req, res) => {
     const isValid = await bcrypt.compare(password, userFound.password);
     if (!isValid) return res.status(400).json({ message: "User or password wrong" });
     const token = await generateToken({ id: userFound._id });
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
+      httpOnly: true,
+      sameSite: "none",
+      secure: "false",
+    });
     res.json({ id: userFound._id , username: userFound.username});
 }
 export const register = async (req, res) => {
@@ -27,7 +32,12 @@ export const register = async (req, res) => {
         });
         const userSaved = await newUser.save();
         const token = await generateToken({id: userSaved._id });
-        res.cookie("token", token);
+        res.cookie("token", token, {
+          expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
+          httpOnly: true,
+          sameSite: "none",
+          secure: "false",
+        });
         res.json({ id: newUser._id, username:newUser.username});
     } catch (error) {
         res.status(500).json({message: error.message}); 
