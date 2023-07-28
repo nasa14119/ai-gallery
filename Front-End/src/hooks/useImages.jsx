@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/auth.context";
+import {useNavigate} from "react-router-dom"
 const URL = `${import.meta.env.VITE_API}/images`
 
 const callDb = async () => {
@@ -12,7 +13,7 @@ const callDb = async () => {
   });
 };
 
-async function getImagesFromDb(addError){
+async function getImagesFromDb(addError, navigate){
   let res; 
   try {
     res = await callDb();
@@ -20,16 +21,25 @@ async function getImagesFromDb(addError){
     res = res.reverse();
   } catch (error) {
     addError("There was an error while geting images");
+    navigate("/login")
   }
   return res; 
 }
 
 export function useImages() {
   const [data, setFetch] = useState(null);
-  const {addError} = useAuth()
+  const navigate = useNavigate();  
+  const {addError,handleLogout } = useAuth()
   const makeFetch = async () => {
-    const res = await getImagesFromDb(addError);
-    setFetch(() => res);
+    let res = await callDb(); 
+    if(res.status !== 200){
+      addError("There was an error"); 
+      handleLogout(); 
+      navigate("/login"); 
+      return
+    }
+    res = await res.json()
+    setFetch(() => res.reverse());
   };
   return {data , makeFetch}
 }

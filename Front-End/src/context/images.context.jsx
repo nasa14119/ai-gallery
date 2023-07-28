@@ -16,7 +16,11 @@ export function ImagesProvider({ children }) {
     const [focusImage, setFocus] = useState(null);
     const [linkCopied, setLink] = useState(""); 
     useEffect(()=>{
-      makeFetch(); 
+      (
+        async ()=>{
+          await makeFetch(); 
+        }
+      )()
     },[])
     useEffect(() => {
       if (data === null) return;
