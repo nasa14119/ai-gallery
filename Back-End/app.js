@@ -8,7 +8,7 @@ const app = express();
 
 //configs of express
 app.use(express.json()); 
-app.use(cors({credentials: true, origin : (orgin, callback) => callback()})); 
+app.use(cors({credentials: true, origin : "*"})); 
 app.use(cookieParser()); 
 app.get("/", (req, res) =>{
   res.send("Welcome to the api for the app of images"); 
