@@ -10,9 +10,31 @@ export const useAuth = () =>{
     if(!context) throw Error("The Element cant acces the context"); 
     return context; 
 }; 
-
+const VerifyAuth = async () => {
+  try {
+    const res = await VerifyToken(); 
+    const userFound = await res.json()
+    return userFound; 
+  }catch{
+    return null
+  } 
+}
 export const AuthProvider = ({children}) => {
-    const [user, setUser] = useState(null); 
+    const [user, setUser] = useState(async () => {
+      setLoading(true);
+      const cookies = Cookies.get();
+      if (!cookies.token) {
+        setAutentification(false);
+        setLoading(false);
+        return null;
+      }
+      const res = await VerifyAuth();
+      if (res !== null) {
+        setAutentification(true);
+      }
+      setLoading(false);
+      return res;
+    }); 
     const [isAuth, setAutentification] = useState(false); 
     const [isLoading, setLoading] = useState(true); 
     const [ErrorElement, addError] = useMakeError(); 
@@ -43,7 +65,6 @@ export const AuthProvider = ({children}) => {
         setAutentification(false);
       }
     }
-
     useEffect(()=>{
       const cookies = Cookies.get();
       if(!cookies.token) {
@@ -52,18 +73,14 @@ export const AuthProvider = ({children}) => {
         setLoading(false); 
         return 
       }
-      const handleAuth = async () => {
-        try {
-          const res = await VerifyToken(); 
-          const userFound = await res.json()
+      setUser(async () => {
+        const res = await VerifyAuth(); 
+        if(res !== null){
           setAutentification(true); 
-          setUser(userFound); 
-        } catch (err) {
-          setAutentification(false);
         }
         setLoading(false); 
-      }
-      handleAuth(); 
+        return res; 
+      })
     }, [])
     const triggerReload = async () =>{
       setLoading(true); 
