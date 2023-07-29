@@ -36,10 +36,13 @@ export const Form = ({func}) => {
   const {addError} = useAuth(); 
   const {register, handleSubmit, formState:{errors}} = useForm()
   const [showPassword, setState] = useState(false); 
-  const handleInput = handleSubmit(values => {
-    const {isFine, message} = parseData(values); 
-    if(!isFine) return addError(message.join(" - "));  
-    func(values)
+  const [isLoading, setLoading ] = useState(false); 
+  const handleInput = handleSubmit((values) => {
+    setLoading(true);
+    const { isFine, message } = parseData(values);
+    if (!isFine) return addError(message.join(" - "));
+    const res = func(values);
+    res.catch(() => setLoading(false)) 
   });
   useEffect(() =>{
     if(Object.entries(errors).length > 0){
@@ -84,7 +87,18 @@ export const Form = ({func}) => {
           )}
         </div>
       </label>
-      <button type="submit">Send</button>
+      <div className="submitContainer relative">
+        <div className="background absolute inset-y-0 inset-x-auto" data-loading={isLoading}></div>
+        {isLoading ? (
+          <div className="loader">
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </div>
+        ) : (
+          <button type="submit"> Send </button>
+        )}
+      </div>
     </form>
   );
 }

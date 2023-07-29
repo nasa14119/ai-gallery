@@ -2,6 +2,7 @@ import { useMakeError } from "../hooks/useMakeError";
 import {createContext, useContext, useEffect, useState} from "react"
 import {fetchRegister, fetchLogin, fetchLogout, VerifyToken} from "../utils/auth"
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext(); 
 
@@ -20,6 +21,9 @@ const VerifyAuth = async () => {
   } 
 }
 export const AuthProvider = ({children}) => {
+  const [isLoading, setLoading] = useState(true); 
+  const [isAuth, setAutentification] = useState(false); 
+  const navigate = useNavigate()
     const [user, setUser] = useState(async () => {
       setLoading(true);
       const cookies = Cookies.get();
@@ -35,28 +39,38 @@ export const AuthProvider = ({children}) => {
       setLoading(false);
       return res;
     }); 
-    const [isAuth, setAutentification] = useState(false); 
-    const [isLoading, setLoading] = useState(true); 
     const [ErrorElement, addError] = useMakeError(); 
-    const handleRegistration = async (obj) => {
-      const {status, data} = await fetchRegister(obj);
-      if (status !== 200) {
-        addError(data.message);
-        return
-      }
-      if(!data) return addError("Error in connection with server"); 
-      setUser(data);
-      setAutentification(true);
+    const handleRegistration = (obj) => {
+      return new Promise(async (resolve, reject)=>{
+        const {status, data} = await fetchRegister(obj); 
+        if(!data){
+          return reject(addError("Error in connection with server"))
+        } 
+        if (status !== 200) {
+          return reject(addError(data.message)); 
+        }
+        setUser(data);
+        setAutentification(true);
+        navigate("/dashboard");
+        resolve(data); 
+      })
     };
-    const handleLogin = async (obj) => {
+    const handleLogin = (obj) => {
+      return new Promise(async (resolve, reject)=>{
       const { status, data } = await fetchLogin(obj);
-      if(!data) return addError("Error in connection with server"); 
-      if (status !== 200) {
-        addError(data.message);
-        return;
-      }
-      setUser(data);
-      setAutentification(true);
+        if(!data){
+          addError("Error in connection with server")
+          return reject("No information found")
+        } 
+        if (status !== 200) {
+          addError(data.message)
+          return reject("Someting whent wrong in the fetch request"); 
+        }
+        setUser(data);
+        setAutentification(true);
+        navigate("/dashboard");
+        return resolve(data); 
+      })
     };
     const handleLogout = async () => {
       const status = await fetchLogout(); 

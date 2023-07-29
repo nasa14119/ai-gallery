@@ -3,17 +3,9 @@ import {FollowMouse} from "../../components/FollowMouse";
 import { Form } from "../../components/Form";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth.context";
-import { useNavigate } from "react-router-dom";
 import HomeLink from "../../components/HomeLink";
 function Login() {
-  const {ErrorElement, handleLogin, isAuth} = useAuth()
-  const navigate = useNavigate(); 
-  const handleSubmit = (obj) => {
-    handleLogin(obj)
-    if(isAuth){
-      navigate("/dashboard"); 
-    }
-  }
+  const {ErrorElement, handleLogin} = useAuth()
   return (
     <div className="w-full h-screen flex justify-center items-center flex-col gap-y-5">
       <SwitchTheme />
@@ -39,7 +31,7 @@ function Login() {
             </g>
           </svg>
         </h1>
-        <Form func={handleSubmit}/>
+        <Form func={handleLogin}/>
         <span className="absolute bottom-0 left-0 w-full text-center h-10 text-white">
             You don't have an account? <Link to="/register" className="underline">register</Link> 
         </span>

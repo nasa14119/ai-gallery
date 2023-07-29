@@ -6,8 +6,7 @@ import RegisterIcon from "../../assets/Icons/register-icon.svg"
 import { useAuth } from "../../context/auth.context";
 import HomeLink from "../../components/HomeLink";
 function Register() {
-  const {handleRegistration, ErrorElement, isAuth} = useAuth()
-  const navigate = useNavigate(); 
+  const {handleRegistration, ErrorElement} = useAuth()
   return (
     <div className="w-full h-screen flex justify-center items-center flex-col gap-y-5">
       <SwitchTheme />
@@ -17,12 +16,7 @@ function Register() {
         <h1 className="w-20 aspect-square mx-auto">
           <img src={RegisterIcon} alt="Icon of a pen and paper" />
         </h1>
-        <Form func={(obj) =>{
-            handleRegistration(obj); 
-            if(isAuth){
-              navigate("/dashboard"); 
-            }
-          }}/>
+        <Form func={handleRegistration}/>
         <span className="absolute bottom-0 left-0 w-full text-center h-10 text-white">
           Already have an account?{" "}
           <Link to="/login" className="underline">

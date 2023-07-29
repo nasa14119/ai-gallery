@@ -31,11 +31,80 @@
 .form label input:focus + span, .form label input:not(:placeholder-shown) + span{
     transform: translateY(-100%);
 }
-.form button{
-    width: 100%;
+.submitContainer{
+    --duration: 500ms; 
     justify-self: flex-end;
+    width: 100%;
     font-weight:500;
-    border-radius: 2rem;
     font-size: var(--font-size); 
-    @apply my-5 font-body bg-white py-5 px-10 w-[70%] mx-auto text-purple-600; 
+    @apply font-body  h-12  text-purple-600 mx-auto flex justify-center items-center; 
 }
+.submitContainer .background{
+    transition:all 500ms ease-in;
+    border-radius: 2rem;
+    width: 70%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.submitContainer .background[data-loading="true"]{
+    width: 20%;
+}
+.submitContainer .background[data-loading="false"]{
+    width: 70%;
+}
+.submitContainer button{
+    opacity: 0;
+    height: 100%;
+    width: 70%;
+    animation:open-submit 250ms ease-out forwards;
+    animation-delay: var(--duration);
+}
+@keyframes open-submit {
+    from{
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.loader {
+    display: flex;
+    height: 50%;
+    opacity: 0;
+    animation:open-submit 250ms ease forwards;
+    animation-delay:var(--duration);
+    align-items: center;
+  }
+  
+  .bar {
+    display: inline-block;
+    width: 3px;
+    height: 10px;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    animation: scale-up4 1s linear infinite;
+  }
+  
+  .bar:nth-child(2) {
+    height: 25px;
+    margin: 0 5px;
+    animation-delay: .25s;
+  }
+  
+  .bar:nth-child(3) {
+    animation-delay: .5s;
+  }
+  
+  @keyframes scale-up4 {
+    20% {
+      background-color: #000;
+      transform: scaleY(1.4);
+    }
+  
+    40% {
+      transform: scaleY(1);
+    }
+  }
