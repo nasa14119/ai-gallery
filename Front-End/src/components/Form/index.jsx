@@ -106,7 +106,7 @@ export const Form = ({func}) => {
             <span className="bar"></span>
           </div>
         ) : (
-          <button type="submit" onClick={()=> console.log("Button Click")}> Send </button>
+          <button type="submit"> Send </button>
         )}
       </div>
     </form>
