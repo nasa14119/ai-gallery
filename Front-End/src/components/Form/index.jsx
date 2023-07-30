@@ -49,7 +49,7 @@ export const Form = ({func}) => {
     const { isFine, message } = parseData(values);
     if (!isFine) return addError(message.join(" - "));
     const res = func(values);
-    res.catch(sleep(500).then(() => setLoading(false)));  
+    res.catch(() => sleep(500).then(() => setLoading(false))); 
   });
   useEffect(() =>{
     if(Object.entries(errors).length > 0){
