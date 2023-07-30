@@ -19,5 +19,5 @@
 }
 .confimation[data-state="false"]{
     animation:confirmation-animation-out 500ms forwards;
-    animation-delay: 1000ms;
+    animation-delay: 2500ms;
 }

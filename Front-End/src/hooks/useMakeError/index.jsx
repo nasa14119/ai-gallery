@@ -9,7 +9,7 @@ export const useMakeError = () =>{
     }
     useEffect(()=> {
         if(error !== null){
-            var Timer = setTimeout(() => setError(null), 2000);
+            var Timer = setTimeout(() => setError(null), 3500);
         }
         return () => {
             clearTimeout(Timer);

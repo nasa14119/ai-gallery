@@ -32,6 +32,13 @@ const parseData = (values) => {
   }
   return response
 }
+function sleep(time) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('done!');
+    }, time);
+  });
+}
 export const Form = ({func}) => {
   const {addError} = useAuth(); 
   const {register, handleSubmit, formState:{errors}} = useForm()
@@ -42,7 +49,7 @@ export const Form = ({func}) => {
     const { isFine, message } = parseData(values);
     if (!isFine) return addError(message.join(" - "));
     const res = func(values);
-    res.catch(() => setLoading(false)) 
+    res.catch(sleep(500).then(() => setLoading(false)));  
   });
   useEffect(() =>{
     if(Object.entries(errors).length > 0){
@@ -88,7 +95,10 @@ export const Form = ({func}) => {
         </div>
       </label>
       <div className="submitContainer relative">
-        <div className="background absolute inset-y-0 inset-x-auto" data-loading={isLoading}></div>
+        <div
+          className="background absolute inset-y-0 inset-x-auto"
+          data-loading={isLoading}
+        ></div>
         {isLoading ? (
           <div className="loader">
             <span className="bar"></span>
@@ -96,7 +106,7 @@ export const Form = ({func}) => {
             <span className="bar"></span>
           </div>
         ) : (
-          <button type="submit"> Send </button>
+          <button type="submit" onClick={()=> console.log("Button Click")}> Send </button>
         )}
       </div>
     </form>
