@@ -15,7 +15,8 @@ export const login = async (req, res) => {
     res.cookie("token", token, {
       expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
       sameSite: "none",
-      secure: "false",
+      secure: "true",
+      httpOnly: false,
     });
     res.json({ id: userFound._id , username: userFound.username});
 }
@@ -34,7 +35,8 @@ export const register = async (req, res) => {
         res.cookie("token", token, {
           expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
           sameSite: "none",
-          secure: "false",
+          secure: "true",
+          httpOnly: false,
         });
         res.json({ id: newUser._id, username:newUser.username});
     } catch (error) {
