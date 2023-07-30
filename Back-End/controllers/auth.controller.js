@@ -14,7 +14,6 @@ export const login = async (req, res) => {
     const token = await generateToken({ id: userFound._id });
     res.cookie("token", token, {
       expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
-      httpOnly: true,
       sameSite: "none",
       secure: "false",
     });
@@ -34,7 +33,6 @@ export const register = async (req, res) => {
         const token = await generateToken({id: userSaved._id });
         res.cookie("token", token, {
           expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
-          httpOnly: true,
           sameSite: "none",
           secure: "false",
         });
