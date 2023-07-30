@@ -17,7 +17,6 @@ export const login = async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       secure: "false",
-      maxAge: 9000
     });
     res.json({ id: userFound._id , username: userFound.username});
 }
@@ -38,7 +37,6 @@ export const register = async (req, res) => {
           httpOnly: true,
           sameSite: "none",
           secure: "false",
-          maxAge: 9000
         });
         res.json({ id: newUser._id, username:newUser.username});
     } catch (error) {
