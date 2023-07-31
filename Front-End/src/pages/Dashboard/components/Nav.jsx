@@ -14,9 +14,9 @@ function Nav() {
     >
       <ul className="flex items-center justify-end md:text-3xl gap-x-5 font-medium w-full">
         <li className="mr-auto">
-          <a href="/dashboard">
+          <Link to="/dashboard">
             <h1 className="md:text-5xl">DashBoard</h1>
-          </a>
+          </Link>
         </li>
         <li>
           <Link to="/">Home</Link>
