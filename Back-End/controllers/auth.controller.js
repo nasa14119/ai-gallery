@@ -17,6 +17,7 @@ export const login = async (req, res) => {
       sameSite: "none",
       secure: "true",
       httpOnly: false,
+      domain:".onrender.com"
     });
     res.json({ id: userFound._id , username: userFound.username});
 }
@@ -37,6 +38,7 @@ export const register = async (req, res) => {
           sameSite: "none",
           secure: "true",
           httpOnly: false,
+          domain:".onrender.com"
         });
         res.json({ id: newUser._id, username:newUser.username});
     } catch (error) {
