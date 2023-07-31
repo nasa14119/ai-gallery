@@ -9,7 +9,7 @@ const COOKIE_OPTIONS = {
   sameSite: "none",
   secure: "true",
   httpOnly:false, 
-  domain: "mygalleryofimages.onrender"
+  domain: "mygalleryofimages.onrender.com"
 }
 
 export const login = async (req, res) => {
