@@ -9,7 +9,7 @@ const COOKIE_OPTIONS = {
   sameSite: "none",
   secure: "true",
   httpOnly:false, 
-  domain: "fullstack-gallery.onrender"
+  domain: "mygalleryofimages.onrender"
 }
 
 export const login = async (req, res) => {
