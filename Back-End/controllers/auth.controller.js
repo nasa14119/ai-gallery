@@ -5,11 +5,10 @@ import { generateToken } from "../utils/jwt.js";
 import jwt from "jsonwebtoken";
 import { env } from "../utils/env.js";
 const COOKIE_OPTIONS = {
-  expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
+  maxAge: 24 * 60 * 60 * 1000,
+  // expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
+  path: "/", 
   sameSite: "none",
-  secure: "true",
-  httpOnly:false, 
-  domain: "fullstack-gallery.onrender.com"
 }
 
 export const login = async (req, res) => {
