@@ -5,9 +5,9 @@ import { generateToken } from "../utils/jwt.js";
 import jwt from "jsonwebtoken";
 import { env } from "../utils/env.js";
 const COOKIE_OPTIONS = {
-  maxAge: 24 * 60 * 60 * 1000,
-  // expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
+  expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
   path: "/", 
+  secure: true, 
   sameSite: "none",
 }
 
