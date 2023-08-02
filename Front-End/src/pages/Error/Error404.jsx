@@ -1,31 +1,32 @@
+import "./style.css"
+import { useAuth } from "../../context/auth.context";
+import { getFunctionTheme, getTheme } from "../../context/theme.context";
 import { Link } from "react-router-dom";
-import { getFunctionTheme, getTheme } from "../../../context/theme.context";
-import { useAuth } from "../../../context/auth.context";
 import { useState } from "react";
+import { Logout } from "../Home/Logout";
 
-export function NavPhone() {
+function Navigation() {
   const isDark = getTheme();
   const handleTheme = getFunctionTheme(); 
   const { handleLogout } = useAuth();
   const [state, setState] = useState(false); 
   return (
-    <nav
-      className={`sticky top-0 h-[10vh] ${
-        isDark ? "bg-black" : "bg-white"
-      } nav-phone z-50`}
-    >
-      <div className="flex justify-between items-center w-full">
-        <Link to="/dashboard">
-          <h2 className="text-2xl font-extrabold pointer-events-none">Dashboard</h2>
-        </Link>
-        <span className="cursor-pointer" onClick={() => setState(true)}>
+    <nav className="h-[15vh] w-full flex justify-between items-center px-5 z-50">
+      <span className="text-4xl">
+        <Link to="/dashboard">Go to Dashboard</Link>
+      </span>
+      <span className="relative h-9 aspect-square flex justify-center items-center">
+        <span
+          className="cursor-pointer"
+          onClick={() => setState((prev) => !prev)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-7 aspect-square"
+            className="w-full aspect-square"
           >
             <path
               strokeLinecap="round"
@@ -34,22 +35,37 @@ export function NavPhone() {
             />
           </svg>
         </span>
-      </div>
-      <div
-        className="content fixed inset-0 "
-        onClick={() => setState(false)}
-        data-active={state}
-      >
-        <main
-          data-active={state}
-          className={`p-5 ${
-            !isDark ? "bg-black/90 text-white" : "bg-white/90 text-black"
+        <div
+          className={`nav-controls z-50 ${
+            isDark ? "bg-white text-black" : "bg-black text-white"
           }`}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
+          data-active={state}
         >
-          <div className="absolute right-2 bottom-5 flex justify-end items-center h-5 gap-x-5">
+          <span
+            className="w-9 h-9 absolute top-5 right-5 text-red-500 cursor-pointer z-50"
+            onClick={() => setState((prev) => !prev)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-full aspect-square"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </span>
+          <main className="absolute inset-0 flex justify-center items-center flex-col gap-y-5 text-2xl font-bold">
+            <Link to="/">Home</Link>
+            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/dashboard/add-image">Add Image</Link>
+          </main>
+          <footer className="absolute right-2 bottom-5 flex justify-end items-center h-5 gap-x-5">
             <Link to="/settings">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +87,10 @@ export function NavPhone() {
                 />
               </svg>
             </Link>
-            <span onClick={handleTheme}>
+            <span className="cursor-pointer" onClick={handleLogout}>
+              <Logout styles="h-8 w-8" />
+            </span>
+            <span onClick={handleTheme} className="cursor-pointer">
               {isDark ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -104,20 +123,27 @@ export function NavPhone() {
                 </svg>
               )}
             </span>
-          </div>
-          <ul className="w-full h-full flex flex-col justify-center items-center text-2xl font-semibold">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="add-image">Add Image</Link>
-            </li>
-            <li onClick={handleLogout}>
-              <span className="cursor-pointer">Logout</span>
-            </li>
-          </ul>
-        </main>
-      </div>
+          </footer>
+        </div>
+      </span>
+      <div
+          className={`${state ? "block" : "hidden"} fixed inset-0 -z-40`}
+          onClick={() => setState((prev) => !prev)}
+        ></div>
     </nav>
+  );
+}
+
+export function Error404() {
+  return (
+    <>
+      <Navigation/> 
+      <div className="flex justify-center items-center fixed inset-0 -z-50">
+        <span className="text-center">
+          <h1 className="text-7xl">Error</h1>
+          <h3 className="text-5xl">404</h3>
+        </span>
+      </div>
+    </>
   );
 }

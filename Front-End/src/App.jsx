@@ -11,6 +11,7 @@ import AlReadyLogin from "./pages/AlReadyLogin";
 import { DashboardContainer } from "./pages/Dashboard/DashboardContainer";
 import { Edit } from "./pages/Dashboard/Edit";
 import { Settings } from "./pages/Settings";
+import { Error404 } from "./pages/Error/Error404";
 function App() {
   return (
     <ThemeProvider>
@@ -22,13 +23,14 @@ function App() {
             <Route path="/register" element={<Register />} />
           </Route>
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<DashboardContainer/>}>
+            <Route path="/dashboard" element={<DashboardContainer />}>
               <Route index element={<Dashboard />} />
-              <Route path="add-image" element={<AddImage />}/>
-              <Route path="edit/:id" element={<Edit />}/>
+              <Route path="add-image" element={<AddImage />} />
+              <Route path="edit/:id" element={<Edit />} />
             </Route>
-            <Route path="/settings" element={<Settings/>}/>
+            <Route path="/settings" element={<Settings />} />
           </Route>
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </AuthProvider>
     </ThemeProvider>
