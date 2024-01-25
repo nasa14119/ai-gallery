@@ -2,7 +2,6 @@ import { Link } from "react-router-dom"
 import SwitchTheme from "../../components/SwithTheme"
 import "./styles.css"
 import Loading from "../../components/Loading";
-import { useRealUser } from "./hooks/useRealUser";
 import {useAuth} from "../../context/auth.context"
 import { Info } from "./components/Info";
 import {Logout} from "../Home/Logout"

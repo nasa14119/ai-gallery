@@ -24,22 +24,8 @@ export const AuthProvider = ({children}) => {
   const [isLoading, setLoading] = useState(true); 
   const [isAuth, setAutentification] = useState(false); 
   const navigate = useNavigate()
-    const [user, setUser] = useState(async () => {
-      setLoading(true);
-      const cookies = Cookies.get();
-      if (!cookies.token) {
-        setAutentification(false);
-        setLoading(false);
-        return null;
-      }
-      const res = await VerifyAuth();
-      if (res !== null) {
-        setAutentification(true);
-      }
-      setLoading(false);
-      return res;
-    }); 
-    const [ErrorElement, addError] = useMakeError(); 
+  const [user, setUser] = useState(null); 
+  const [ErrorElement, addError] = useMakeError(); 
     const handleRegistration = (obj) => {
       return new Promise(async (resolve, reject)=>{
         const {status, data} = await fetchRegister(obj); 
@@ -55,47 +41,36 @@ export const AuthProvider = ({children}) => {
         resolve(data); 
       })
     };
-    const handleLogin = (obj) => {
-      return new Promise(async (resolve, reject)=>{
-      const { status, data } = await fetchLogin(obj);
+    const handleLogin = async (obj) => {
+      try {
+        const { status, data } = await fetchLogin(obj);
         if(!data){
           addError("Error in connection with server")
           return reject("No information found")
-        } 
+        }
         if (status !== 200) {
           addError(data.message)
-          return reject("Someting whent wrong in the fetch request"); 
+          return reject("Someting whent wrong in the fetch request");
         }
         setUser(data);
         setAutentification(true);
         navigate("/dashboard");
-        return resolve(data); 
-      })
+      } catch (error) {
+        console.log(error)
+        addError(`${error.message}`); 
+      }
     };
     const handleLogout = async () => {
-      const status = await fetchLogout(); 
-      if(status === 200){
-        setUser(null);
-        setAutentification(false);
+      try {
+        const status = await fetchLogout(); 
+        if(status === 200){
+          setUser(null);
+          setAutentification(false);
+        }
+      } catch (error) {
+        addError(error.message)
       }
     }
-    useEffect(()=>{
-      const cookies = Cookies.get();
-      if(!cookies.token) {
-        setAutentification(false); 
-        setUser(null); 
-        setLoading(false); 
-        return 
-      }
-      setUser(async () => {
-        const res = await VerifyAuth(); 
-        if(res !== null){
-          setAutentification(true); 
-        }
-        setLoading(false); 
-        return res; 
-      })
-    }, [])
     const triggerReload = async () =>{
       setLoading(true); 
       try {
@@ -104,6 +79,7 @@ export const AuthProvider = ({children}) => {
         setAutentification(true); 
         setUser(userFound); 
       } catch (err) {
+        addError(err.message)
         setAutentification(false);
       }
       setLoading(false); 
@@ -118,6 +94,26 @@ export const AuthProvider = ({children}) => {
       setAutentification(false); 
       addError(`${parse.user} have been deleted`); 
     }
+    useEffect(() => {
+      const checkForCookies = async () => {
+        setLoading(true);
+        const cookies = Cookies.get();
+        //If token is not in the cookies
+        if (!cookies.token) {
+          setAutentification(false);
+          setLoading(false);
+          return null;
+        }
+        const res = await VerifyAuth();
+        if (res !== null) {
+          setAutentification(true);
+          document.cookie = `token:${res.id}`
+        }
+        setLoading(false);
+        return res;
+      };
+      checkForCookies().then((v) => setUser(v));
+    }, []);
     return (
       <AuthContext.Provider
         value={{

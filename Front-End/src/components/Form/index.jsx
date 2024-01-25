@@ -44,12 +44,12 @@ export const Form = ({func}) => {
   const {register, handleSubmit, formState:{errors}} = useForm()
   const [showPassword, setState] = useState(false); 
   const [isLoading, setLoading ] = useState(false); 
-  const handleInput = handleSubmit((values) => {
+  const handleInput = handleSubmit(async (values) => {
     setLoading(true);
     const { isFine, message } = parseData(values);
     if (!isFine) return addError(message.join(" - "));
-    const res = func(values);
-    res.catch(() => sleep(500).then(() => setLoading(false))); 
+    await func(values);
+    setLoading(false)
   });
   useEffect(() =>{
     if(Object.entries(errors).length > 0){
