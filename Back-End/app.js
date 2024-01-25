@@ -8,6 +8,7 @@ const app = express();
 
 //configs of express
 app.use(express.json()); 
+app.set("trust proxy", 1);
 app.use(
   cors({
     credentials: true,
