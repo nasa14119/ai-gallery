@@ -82,4 +82,5 @@ export const validateToken = async (req, res) => {
             username: userFound.username
         }); 
     })
+    res.cookie("token", token, COOKIE_OPTIONS);
 }
