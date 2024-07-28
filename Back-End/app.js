@@ -1,3 +1,4 @@
+import path from "path"
 import express  from "express";
 import auth from "./routes/auth.routes.js"
 import images from "./routes/images.routes.js"
@@ -22,9 +23,17 @@ app.use(
   })
 ); 
 app.use(cookieParser()); 
-app.get("/", (req, res) =>{
-  res.send("Welcome to the api for the app of images"); 
-})
+
+if(process.env.NODE_ENV === "PRODUCTION"){
+  const __dirname = path.resolve(); 
+  app.use(express.static(path.join(__dirname, "/Front-End/dist"))); 
+
+  app.get("*", (req, res) => res.sendFile(path.resolve(__dirname,"Front-End", "dist", "index.html")))
+}else {
+  app.get("/", (req, res) =>{
+    res.send("Welcome to the api for the app of images"); 
+  })
+}
 app.use('/api', auth)
 app.use('/api', images); 
 
