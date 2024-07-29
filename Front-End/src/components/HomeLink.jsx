@@ -2,34 +2,15 @@ import { Link } from "react-router-dom";
 
 export default function HomeLink() {
   return (
-    <div className="absolute top-5 right-20 h-9 aspect-square">
+    <div className="absolute top-5 right-14 aspect-square h-7">
       <Link to="/">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            {" "}
-            <g clipPath="url(#clip0_15_3)">
-              {" "}
-              <rect width="24" height="24" fill="none"></rect>{" "}
-              <path
-                d="M9 21H4C3.44772 21 3 20.5523 3 20V12.4142C3 12.149 3.10536 11.8946 3.29289 11.7071L11.2929 3.70711C11.6834 3.31658 12.3166 3.31658 12.7071 3.70711L20.7071 11.7071C20.8946 11.8946 21 12.149 21 12.4142V20C21 20.5523 20.5523 21 20 21H15M9 21H15M9 21V15C9 14.4477 9.44772 14 10 14H14C14.5523 14 15 14.4477 15 15V21"
-                stroke="currentColor"
-                strokeLinejoin="round"
-              ></path>{" "}
-            </g>{" "}
-            <defs>
-              {" "}
-              <clipPath id="clip0_15_3">
-                {" "}
-                <rect width="24" height="24" fill="none"></rect>{" "}
-              </clipPath>{" "}
-            </defs>{" "}
-          </g>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          className="h-full w-full"
+        >
+          <path d="M21 20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.49a1 1 0 0 1 .386-.79l8-6.223a1 1 0 0 1 1.228 0l8 6.223a1 1 0 0 1 .386.79V20Zm-2-1V9.978l-7-5.444-7 5.444V19h14Z" />
         </svg>
       </Link>
     </div>

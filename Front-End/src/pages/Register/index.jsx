@@ -12,7 +12,7 @@ function Register() {
       <SwitchTheme />
       <HomeLink/> 
       <FollowMouse />
-      <main className="bg-purple-600 rounded-3xl w-7/8 md:w-[minmax(50vw, 500px)] aspect-square flex flex-col p-10 justify-between relative">
+      <main className="bg-purple-600 rounded-3xl w-4/5 lg:w-[minmax(50vw, 500px)] aspect-square flex flex-col px-5 md:px-10 py-10 justify-between relative max-h-[400px] max-w-[400px]">
         <h1 className="w-20 aspect-square mx-auto">
           <img src={RegisterIcon} alt="Icon of a pen and paper" />
         </h1>
