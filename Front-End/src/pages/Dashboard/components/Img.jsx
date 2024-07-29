@@ -3,10 +3,11 @@ import placeHolderImg from "../../../assets/img/placeholder-600x400-300x200.webp
 import { useImageContext } from "../../../context/images.context";
 import { Link } from "react-router-dom";
 import PendEdit from "../../../assets/Icons/PendEdit";
-import DeleteCan from "../../../assets/Icons/DeleteCan";
+import { useDeleteModal } from "../../../hooks/useDeleteModal";
 
 export function Img({ img, index }) {
   const {setFocus} = useImageContext(); 
+  const [DeleteBtn, Modal] = useDeleteModal({img: img.src, id: img._id})
   const handleLoad = (img) => {
     img.dataset.isload = "true"; 
   }
@@ -21,6 +22,7 @@ export function Img({ img, index }) {
     onClick={() => setFocus(img)}
     className={`relative group ${img.size} text-white z-0`}
     >
+      <Modal/>
       <img
         data-isload="false"
         src={img.src}
@@ -32,24 +34,23 @@ export function Img({ img, index }) {
       <div className="group-hover:h-full absolute bg-black/50 inset-0 text-white cursor-pointer md:h-0 transition-all duration-500 md:bottom-0 md:top-auto ease-out"></div>
       <div className="text-sm px-5 absolute bottom-5 flex justify-between items-center inset-x-0">
         <span>{img.title}</span>
-        <Controls id={img._id}/>
+        <Controls Delete={DeleteBtn} id={img._id}/>
       </div>
     </div>
   );
 }
-function Controls({id}) {
-  const {handleDelete : deleteFromArray} = useImageContext()
-  const handleDelete = () =>{ deleteFromArray(id)}
+function Controls({Delete, id}) {
   return (
-    <ul className="flex justify-end items-center gap-x-2">
+    <ul className="flex justify-end items-center gap-x-2 relative z-40">
       <li className="cursor-pointer">
-        <DeleteCan
+        <Delete />
+        {/* <DeleteCan
           className="h-5 aspect-square"
           onClick={(e) => {
             e.stopPropagation();
             handleDelete();
           }}
-        />
+        /> */}
       </li>
       <li className="cursor-pointer">
         <Link to={`edit/${id}`}>
