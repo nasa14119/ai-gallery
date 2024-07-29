@@ -53,12 +53,14 @@ const PASSWORD_OPTIONS = {
   first_input: {
     id: "password", 
     label: "Old Password",
-    name: "password"
+    name: "password", 
+    autoComplete:"password"
   }, 
   second_input: {
     id:"new-password", 
     label: "New Password",
-    name: "newInformation"
+    name: "newInformation", 
+    autoComplete: ""
   }
 }
 const USERNAME_OPTIONS = {
@@ -67,15 +69,16 @@ const USERNAME_OPTIONS = {
   first_input: {
     id: "username",
     label: "New Username", 
-    name: "newInformation"
+    name: "newInformation", 
+    autoComplete: "username"
   }, 
   second_input: {
     id:"password", 
     label: "Write Your Password", 
-    name: "password"
+    name: "password", 
+    autoComplete: "password"
   }
 }
-//"NewUsername" : "NewPassword"
 export const Info = () =>{
     const form = useRef(null)
     const [options, setOptions] = useState({
@@ -143,11 +146,11 @@ export const Info = () =>{
               <label htmlFor={options.first_input.id}>
                 {options.first_input.label}
               </label>
-              <input type="text" name={options.first_input.name} id={options.first_input.id} />
+              <input type="text" name={options.first_input.name} id={options.first_input.id} autoComplete={options.first_input.autoComplete}/>
               <label htmlFor={options.second_input.id}>
                 {options.second_input.label}
               </label>
-              <input type="text" name={options.second_input.name} id={options.second_input.id} />
+              <input type="text" name={options.second_input.name} id={options.second_input.id} autoComplete={options.second_input.autoComplete} />
               <button
                 type="submit"
                 className="text-lg py-2 px-5 bg-green-700 text-white rounded-2xl  w-full mt-auto"

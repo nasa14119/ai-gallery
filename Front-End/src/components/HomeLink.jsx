@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function HomeLink() {
   return (
-    <div className="absolute top-5 right-14 aspect-square h-7">
+    <div className="absolute top-5 right-14 aspect-square h-7 md:h-9 md:right-16">
       <Link to="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
