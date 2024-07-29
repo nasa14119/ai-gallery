@@ -24,17 +24,20 @@ app.use(
 ); 
 app.use(cookieParser()); 
 
+app.use('/api', auth)
+app.use('/api', images); 
+
 if(process.env.NODE_ENV === "PRODUCTION"){
   const __dirname = path.resolve(); 
   app.use(express.static(path.join(__dirname, "/Front-End/dist"))); 
 
-  app.get("*", (req, res) => res.sendFile(path.resolve(__dirname,"Front-End", "dist", "index.html")))
+  app.get("*", (req, res) => {
+    return res.sendFile(path.resolve(__dirname,"Front-End", "dist", "index.html"))
+  })
 }else {
   app.get("/", (req, res) =>{
     res.send("Welcome to the api for the app of images"); 
   })
 }
-app.use('/api', auth)
-app.use('/api', images); 
 
 export default app; 
