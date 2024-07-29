@@ -19,7 +19,7 @@ export function FocusInImage() {
         onClick={() => setFocus(null)}
       >
         <div
-          className={`max-h-[80%] ${focusImage.size === "tall" ? "w-1/2 aspect-[9/16] max-w-[500px]" : "w-3/4 aspect-square max-w-[750px]"} relative rounded-3xl -z-50 text-white focusImage ${
+          className={`max-h-[80%] ${focusImage.size === "tall" ? "h-[90%] md:w-1/2 aspect-[9/16] max-w-[500px]" : "w-[90%] h-[80%] md:w-3/4 aspect-square max-w-[750px]"} relative rounded-3xl -z-50 text-white focusImage ${
             isDark ? "bg-white" : "bg-black"
           }`}
           onClick={(e) => e.stopPropagation()}
