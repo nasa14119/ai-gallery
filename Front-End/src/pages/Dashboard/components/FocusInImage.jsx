@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useImageContext } from "../../../context/images.context";
 import { getTheme } from "../../../context/theme.context";
 import { Link } from "react-router-dom";
+import { BtnOpenNewPage } from "../../../components/BtnOpenNewPage";
 export function FocusInImage() {
   const [isVisible, setVisibility] = useState(false);
   const isDark = getTheme();
@@ -18,10 +19,10 @@ export function FocusInImage() {
         onClick={() => setFocus(null)}
       >
         <div
-          className={`w-9/12 max-w-[750px] max-h-[80%] aspect-square relative rounded-3xl -z-50 text-white focusImage ${
+          className={`max-h-[80%] ${focusImage.size === "tall" ? "w-1/2 aspect-[9/16] max-w-[500px]" : "w-3/4 aspect-square max-w-[750px]"} relative rounded-3xl -z-50 text-white focusImage ${
             isDark ? "bg-white" : "bg-black"
           }`}
-          onClick={(e)=>e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           <button
             className="text-red-500 text-5xl absolute top-0 right-5 z-50 cursor-pointer"
@@ -35,8 +36,11 @@ export function FocusInImage() {
               <img
                 src={focusImage.src}
                 alt=""
-                className="object-cover h-full min-w-full relative -z-40"
+                className="object-cover min-h-full w-full relative -z-40 object-center"
               />
+              <div className="h-10 w-10 absolute right-5 bottom-5 opacity-70 p-2 bg-black/60 rounded-full">
+                <BtnOpenNewPage href={focusImage.src}/>
+              </div>
               <aside className="z-40 py-6 px-2 absolute inset-y-0 w-full md:w-1/2">
                 <ul className="flex flex-col ">
                   <li className="odd:font-bold even:text-[0.9rem]">Title:</li>
@@ -50,10 +54,10 @@ export function FocusInImage() {
                   <li className="odd:font-bold even:text-[0.9rem]">Src:</li>
                   <li className="odd:font-bold even:text-[0.9rem] peer">
                     <button
-                      className="break-words w-full"
+                      className="w-full text-ellipsis max-h-20 overflow-hidden text-left whitespace-nowrap"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setLink(focusImage.src)
+                        setLink(focusImage.src);
                         navigator.clipboard.writeText(focusImage.src);
                       }}
                     >
@@ -61,9 +65,7 @@ export function FocusInImage() {
                     </button>
                   </li>
                   <span className="text-[0.8rem] peer-hover:visible invisible mt-5 mx-auto text-center bg-black/60 rounded-3xl px-2 py-1">
-                    {linkCopied === focusImage.src
-                      ? "Copied"
-                      : "Click to Copy"}
+                    {linkCopied === focusImage.src ? "Copied" : "Click to Copy"}
                   </span>
                 </ul>
                 <Link to={`edit/${focusImage._id}`}>
