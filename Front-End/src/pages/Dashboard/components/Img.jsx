@@ -2,6 +2,8 @@ import { useEffect, useRef, useState} from "react";
 import placeHolderImg from "../../../assets/img/placeholder-600x400-300x200.webp";
 import { useImageContext } from "../../../context/images.context";
 import { Link } from "react-router-dom";
+import PendEdit from "../../../assets/Icons/PendEdit";
+import DeleteCan from "../../../assets/Icons/DeleteCan";
 
 export function Img({ img, index }) {
   const {setFocus} = useImageContext(); 
@@ -39,9 +41,21 @@ function Controls({id}) {
   const {handleDelete : deleteFromArray} = useImageContext()
   const handleDelete = () =>{ deleteFromArray(id)}
   return (
-    <ul className="flex justify-end items-center gap-5">
-      <li className="cursor-pointer"><button onClick={(e) => {e.stopPropagation(); handleDelete()}}>Delete</button></li>
-      <li className="cursor-pointer"><Link to={`edit/${id}`}>Edit</Link></li>
+    <ul className="flex justify-end items-center gap-x-2">
+      <li className="cursor-pointer">
+        <DeleteCan
+          className="h-5 aspect-square"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete();
+          }}
+        />
+      </li>
+      <li className="cursor-pointer">
+        <Link to={`edit/${id}`}>
+          <PendEdit className="h-5 aspect-square" />
+        </Link>
+      </li>
     </ul>
   );
 }
