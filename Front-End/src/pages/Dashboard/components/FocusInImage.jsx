@@ -35,7 +35,7 @@ export function FocusInImage() {
               <img
                 src={focusImage.src}
                 alt=""
-                className="object-cover w-full relative -z-40"
+                className="object-cover h-full min-w-full relative -z-40"
               />
               <aside className="z-40 py-6 px-2 absolute inset-y-0 w-full md:w-1/2">
                 <ul className="flex flex-col ">
