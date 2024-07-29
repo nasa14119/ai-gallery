@@ -46,18 +46,17 @@ export const AuthProvider = ({children}) => {
         const { status, data } = await fetchLogin(obj);
         if(!data){
           addError("Error in connection with server")
-          return reject("No information found")
+          throw new Error("No information found")
         }
         if (status !== 200) {
           addError(data.message)
-          return reject("Someting whent wrong in the fetch request");
+          throw new Error("Someting whent wrong in the fetch request")
         }
         setUser(data);
         setAutentification(true);
         navigate("/dashboard");
       } catch (error) {
         console.log(error)
-        addError(`${error.message}`); 
       }
     };
     const handleLogout = async () => {
