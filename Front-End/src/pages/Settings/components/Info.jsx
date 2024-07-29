@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useAuth } from "../../../context/auth.context"
 const UserIcon = () =>{
     return (
@@ -47,59 +47,107 @@ const fetchUpdateData = async (body) => {
     })
     return res; 
 }
+const PASSWORD_OPTIONS = {
+  icon: <LockIcon/>, 
+  key: "NewPassword", 
+  first_input: {
+    id: "password", 
+    label: "Old Password",
+    name: "password"
+  }, 
+  second_input: {
+    id:"new-password", 
+    label: "New Password",
+    name: "newInformation"
+  }
+}
+const USERNAME_OPTIONS = {
+  icon: <UserIcon/>, 
+  key: "NewUsername", 
+  first_input: {
+    id: "username",
+    label: "New Username", 
+    name: "newInformation"
+  }, 
+  second_input: {
+    id:"password", 
+    label: "Write Your Password", 
+    name: "password"
+  }
+}
+//"NewUsername" : "NewPassword"
 export const Info = () =>{
-    const [formUserName, setUsername] = useState(false); 
-    const [formPassword, setPassword] = useState(false); 
+    const form = useRef(null)
+    const [options, setOptions] = useState({
+      icon: <LockIcon/>, 
+      key: "NewPassword", 
+      first_input: {
+        id: "password", 
+        label: "Old Password",
+        name: "password"
+      }, 
+      second_input: {
+        id:"new-password", 
+        label: "New Password",
+        name: "newInformation"
+      }
+    }); 
+    const [isVisible, setVisibility] = useState(false)
     const {addError , ErrorElement, triggerReload} = useAuth(); 
+    const handleClickOption = (v) => {
+      form.current.reset()
+      setOptions(v === "PASSWORD" ? PASSWORD_OPTIONS : USERNAME_OPTIONS)
+      setVisibility(true)
+    }
     const handleSubmit = async (event) =>{
         event.preventDefault(); 
-        const form = event.target; 
-        const formData = Object.fromEntries(new FormData(form)); 
-        const body = {password: formData.password}
-        body[formUserName ? "NewUsername" : "NewPassword"] = formData.newInformation; 
-        const res = await fetchUpdateData(body); 
-        if(!res.ok){
-            if(res.status === 401)return addError("Wrong password"); 
-            addError("There was an error traing to save the information")
+        // const form = event.target; 
+        const formData = Object.fromEntries(new FormData(form.current)); 
+        const body = {
+          [options.key] : formData.newInformation,
+          password: formData.password,
         }
-        formUserName ? setUsername(false) : setPassword(false);
+        const res = await fetchUpdateData(body); 
+        if (!res.ok) {
+          if (res.status === 401) return addError("Wrong password");
+          addError("There was an error traing to save the information");
+        }
+        setVisibility(false)
         triggerReload(); 
     }
     return (
       <>
-        {!formUserName && !formPassword ? (
           <div className="info-container">
-            <div onClick={() => setUsername(true)}>
+            <div onClick={() => handleClickOption("USERNAME")}>
               <span>
                 <UserIcon />
               </span>
               <h2>Username</h2>
             </div>
-            <div onClick={() => setPassword(true)}>
+            <div onClick={() => handleClickOption("PASSWORD")}>
               <span>
                 <LockIcon />
               </span>
               <h2>Password</h2>
             </div>
           </div>
-        ) : (
-          <div className="info-form">
+          <div className="info-form z-50" data-isvisible={isVisible}>
             <button
               className="text-red-500 text-5xl absolute top-0 right-5 z-50 cursor-pointer"
-              onClick={() => formUserName ? setUsername(false) : setPassword(false)}
+              onClick={() => setVisibility(false)}
             >
               &times;
             </button>
-            <h3>{formUserName ? <UserIcon /> : <LockIcon />}</h3>
-            <form action="" onSubmit={handleSubmit}>
-              <label htmlFor="password">
-                {formUserName ? "Password:" : "Old Password:"}
+            <h3>{options.icon}</h3>
+            <form action="" onSubmit={handleSubmit} ref={form}>
+              <label htmlFor={options.first_input.id}>
+                {options.first_input.label}
               </label>
-              <input type="text" name="password" id="password" />
-              <label htmlFor="new-password">
-                {formUserName ? "New UserName:" : "NewPassword:"}
+              <input type="text" name={options.first_input.name} id={options.first_input.id} />
+              <label htmlFor={options.second_input.id}>
+                {options.second_input.label}
               </label>
-              <input type="text" name="newInformation" id="new-password" />
+              <input type="text" name={options.second_input.name} id={options.second_input.id} />
               <button
                 type="submit"
                 className="text-lg py-2 px-5 bg-green-700 text-white rounded-2xl  w-full mt-auto"
@@ -108,7 +156,7 @@ export const Info = () =>{
               </button>
             </form>
           </div>
-        )}
+            <div className={`fixed inset-0 ${isVisible?"block":"hidden"}`} onClick={() => setVisibility(prev => !prev)}></div>
         <ErrorElement/> 
       </>
     );

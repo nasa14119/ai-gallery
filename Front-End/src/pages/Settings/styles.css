@@ -26,15 +26,24 @@
 }
 @keyframes form-settings{
     from{
-        transform: translate(-50%);
+        transform: scale(0.8);
     }
     to{
-        transform: translate(0%);
+        transform: scale(1);
+    }
+}
+@keyframes form-settings-hide{
+    from{
+        display: flex;
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+        display: none;
     }
 }
 .info-form{
     max-width: 700px;
-    animation: forwards form-settings 750ms ease-out;
     color: #fff;
     display: flex;
     position: fixed;
@@ -42,6 +51,13 @@
     align-items: center;
     flex-direction: column;
     @apply bg-[var(--background-setting)] rounded-3xl fixed mx-auto inset-x-5 inset-y-[10%] py-10 px-5; 
+}
+.info-form[data-isvisible="true"]{
+    animation: forwards form-settings 250ms ease;
+}
+.info-form[data-isvisible="false"]{
+    animation: forwards form-settings-hide 250ms ease;
+    display: none;
 }
 .info-form form{
     width: 100%;
