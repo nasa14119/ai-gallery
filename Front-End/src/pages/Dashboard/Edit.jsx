@@ -23,7 +23,7 @@ export const Edit = () => {
     const API = `${import.meta.env.VITE_API}/image/${id}`
     const makeFetch = async () => {
       const res = await fetch(API, {
-        method: "PUT",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
