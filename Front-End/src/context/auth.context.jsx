@@ -106,7 +106,6 @@ export const AuthProvider = ({children}) => {
         const res = await VerifyAuth();
         if (res !== null) {
           setAutentification(true);
-          document.cookie = `token:${res.id}`
         }
         setLoading(false);
         return res;

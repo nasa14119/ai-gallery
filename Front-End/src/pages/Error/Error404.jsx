@@ -4,6 +4,7 @@ import { getFunctionTheme, getTheme } from "../../context/theme.context";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Logout } from "../Home/Logout";
+import { DashBoardIcon } from "../../assets/Icons/Dashboard";
 
 function Navigation() {
   const isDark = getTheme();
@@ -13,7 +14,7 @@ function Navigation() {
   return (
     <nav className="h-[15vh] w-full flex justify-between items-center px-5 z-50">
       <span className="text-4xl">
-        <Link to="/dashboard">Go to Dashboard</Link>
+        <Link to="/dashboard"><DashBoardIcon/></Link>
       </span>
       <span className="relative h-9 aspect-square flex justify-center items-center">
         <span
