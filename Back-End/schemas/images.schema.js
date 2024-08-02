@@ -30,12 +30,14 @@ export const updateSchema = z.object({
     .string({
       required_error: "Title is nedded",
     })
+    .min(1)
     .trim()
     .optional(),
   src: z
     .string({
       required_error: "Source is nedded",
     })
+    .min(1)
     .trim()
     .url({
       required_error: "Link to image nedded",

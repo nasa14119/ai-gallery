@@ -1,33 +1,45 @@
 import Images from "../models/images.model.js"
 
 export const getImage = async (req, res) => {
-    const post = await Images.findById(req.params.id); 
+    const post = await Images.findOne({user:req.user.id}, {
+        images:{$elemMatch: {_id: req.params.id}}
+    })
     if(!post) return res.status(404).json({message: "No post was found"}); 
-    res.json(post); 
+    res.json(post.images[0]); 
 }
 export const getImages = async (req, res) => {
-    const posts = await Images.find({user:req.user.id}).populate("user"); 
-    res.json(posts); 
+    const posts = await Images.findOne({user:req.user.id})
+    res.json(posts.images); 
 }
 export const addImage = async (req, res) => {
     console.log("Image Added" , req.body)
     const {title, src, size} = req.body
-    const newPost = new Images({
-        title,
-        src, 
-        user: req.user.id, 
-        size
-    }); 
-    const savedPost = await newPost.save(); 
+    const id = req.user.id
+    const newPost = { title, src, size }; 
+    console.log(newPost)
+    const savedPost = await Images.updateOne({user: id}, {$addToSet: { images: {...newPost}}})
     res.json(savedPost); 
 }
 export const updateImage = async (req, res) => {
-    const post = await Images.findByIdAndUpdate(req.params.id, req.body, {new: true}); 
-    if(!post) return res.status(404).json({message: "No post was found"}); 
-    res.json(post); 
-}
+  const id_image = req.params.id;
+  const id_user = req.user.id;
+  const post = await Images.updateOne(
+    { user: id_user, images: { $elemMatch: { _id: id_image } } },
+    {
+      $set: {
+        "images.$": { ...req.body },
+      },
+    }
+  );
+  if (!post) return res.status(404).json({ message: "No post was found" });
+  return res.json(post);
+};
 export const deleteImage = async (req, res) => {
-    const post = await Images.findByIdAndDelete(req.params.id); 
+    const id_image = req.params.id
+    const id_user = req.user.id 
+    const post = await Images.updateOne({user:id_user}, {$pull :{
+        images: {_id: id_image}
+    }});
     if(!post) return res.status(404).json({message: "No post was found"}); 
     res.sendStatus(204); 
 }

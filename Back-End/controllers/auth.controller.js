@@ -32,6 +32,11 @@ export const register = async (req, res) => {
           password: hash,
         });
         const userSaved = await newUser.save();
+        const newImages = new Images({
+          user: userSaved._id,
+          images: [],
+        }); 
+        newImages.save(); 
         const token = await generateToken({id: userSaved._id });
         res.cookie("token", token, COOKIE_OPTIONS);
         res.json({ id: newUser._id, username:newUser.username});
