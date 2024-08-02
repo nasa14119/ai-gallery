@@ -24,6 +24,7 @@ app.use(
 ); 
 app.use(cookieParser()); 
 
+process.env.NODE_ENV !== "PRODUCTION" && app.use("/", (req, res, next) => {console.log(req.path); next()})
 app.use('/api', auth)
 app.use('/api', images); 
 
