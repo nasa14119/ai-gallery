@@ -1,0 +1,1 @@
+export const SYSTEM = `As una descripcion tan detallada como puedas de los que te pasen. Responde con la descripcion sin mas formatos o introducciones. Max tokens 100`
