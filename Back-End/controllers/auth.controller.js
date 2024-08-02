@@ -76,9 +76,9 @@ export const deleteUser = async (req, res) => {
   res.status(200).json({ user: userFound.username });
 };
 export const validateToken = async (req, res) => {
-    const {token} = req.cookies
+    const { token } = req.cookies
     if(!token) return res.sendStatus(401).json({message:"Unautorized"}); 
-    jwt.verify(token, env.SECRET_TOKEN, async (err, user) =>{
+    jwt.verify(token, env.SECRET_TOKEN, async (err, user) => {
         if(err)return res.sendStatus(401).json({message:"Unautorized"})
         const userFound = await User.findById(user.id)
         if(!userFound)return res.sendStatus(401).json({message:"Unautorized"})
@@ -87,5 +87,4 @@ export const validateToken = async (req, res) => {
             username: userFound.username
         }); 
     })
-    res.cookie("token", token, COOKIE_OPTIONS);
 }

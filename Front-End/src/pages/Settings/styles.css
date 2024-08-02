@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
 :root{
     --background-setting: #1e2125; 
+}
+.font-sarabun{
+    font-family: "Sarabun", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 .settings-nav ul{
     @apply flex justify-center items-center gap-x-2 text-sm md:text-2xl; 
@@ -8,21 +14,7 @@
     @apply py-2 px-2 md:px-5 rounded-3xl bg-slate-400/20 font-bold; 
 }
 .info-container{
-    position: relative;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    padding: 1rem;
-    gap: 1rem;
-}
-.info-container > *{
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    @apply bg-slate-500/40 w-[min(200px,_100%)] aspect-square rounded-3xl mx-auto; 
+    @apply grid grid-cols-3 md:grid-cols-3 grid-rows-1 w-full h-[15vh] md:h-[30vh] px-[5%] gap-x-2 my-5 md:my-10 md:mx-0; 
 }
 @keyframes form-settings{
     from{
@@ -50,7 +42,7 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    @apply bg-[var(--background-setting)] rounded-3xl fixed mx-auto inset-x-5 inset-y-[10%] py-10 px-5; 
+    @apply bg-[#292f3b] rounded-3xl fixed mx-auto inset-x-5 inset-y-[10%] py-10 px-5; 
 }
 .info-form[data-isvisible="true"]{
     animation: forwards form-settings 250ms ease;
@@ -79,7 +71,7 @@
     @apply bg-transparent outline-none px-5 py-[10px] font-normal; 
 }
 .other-options-settings{
-    @apply flex flex-col justify-center w-full px-7; 
+    @apply flex flex-col justify-center w-full px-[5%]; 
 }
 .other-options-settings li{
     cursor: pointer;

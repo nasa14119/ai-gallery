@@ -1,12 +1,13 @@
 import { useRef, useState } from "react"
 import { useAuth } from "../../../context/auth.context"
+import { MenuItem } from "./MenuItem"
 const UserIcon = () =>{
     return (
         <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
-        className="w-16 h-16"
+        className="size-full md:size-16"
       >
         <path
           fillRule="evenodd"
@@ -24,7 +25,7 @@ const LockIcon = () =>{
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-16 h-16"
+        className="size-full md:size-16"
       >
         <path
           strokeLinecap="round"
@@ -34,8 +35,23 @@ const LockIcon = () =>{
       </svg>
     )
 }
+const EmailIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="size-full md:size-16"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+    />
+  </svg>
+);
 const fetchUpdateData = async (body) => {
-    console.log(body); 
     const API = `${import.meta.env.VITE_API}/profile`
     const res = await fetch(API, {
         method:"PUT", 
@@ -79,6 +95,22 @@ const USERNAME_OPTIONS = {
     autoComplete: "password"
   }
 }
+const EMAIL_OPTIONS = {
+  icon: <EmailIcon/>, 
+  key: "email", 
+  first_input: {
+    id: "email",
+    label: "Email", 
+    name: "email", 
+    autoComplete: "email"
+  }, 
+  second_input: {
+    id:"password", 
+    label: "Write Your Password", 
+    name: "password", 
+    autoComplete: "password"
+  }
+}
 export const Info = () =>{
     const form = useRef(null)
     const [options, setOptions] = useState({
@@ -99,12 +131,16 @@ export const Info = () =>{
     const {addError , ErrorElement, triggerReload} = useAuth(); 
     const handleClickOption = (v) => {
       form.current.reset()
-      setOptions(v === "PASSWORD" ? PASSWORD_OPTIONS : USERNAME_OPTIONS)
+      const options = {
+        USERNAME: USERNAME_OPTIONS, 
+        PASSWORD: PASSWORD_OPTIONS, 
+        EMAIL: EMAIL_OPTIONS
+      }
+      setOptions(options[v])
       setVisibility(true)
     }
     const handleSubmit = async (event) =>{
         event.preventDefault(); 
-        // const form = event.target; 
         const formData = Object.fromEntries(new FormData(form.current)); 
         const body = {
           [options.key] : formData.newInformation,
@@ -121,18 +157,9 @@ export const Info = () =>{
     return (
       <>
           <div className="info-container">
-            <div onClick={() => handleClickOption("USERNAME")}>
-              <span>
-                <UserIcon />
-              </span>
-              <h2>Username</h2>
-            </div>
-            <div onClick={() => handleClickOption("PASSWORD")}>
-              <span>
-                <LockIcon />
-              </span>
-              <h2>Password</h2>
-            </div>
+            <MenuItem onClick={() => handleClickOption("USERNAME")} Icon={UserIcon} body="Username"/>
+            <MenuItem onClick={() => handleClickOption("EMAIL")} Icon={EmailIcon} body="Email"/>
+            <MenuItem onClick={() => handleClickOption("PASSWORD")} Icon={LockIcon} body="Password"/>
           </div>
           <div className="info-form z-50" data-isvisible={isVisible}>
             <button
@@ -141,13 +168,13 @@ export const Info = () =>{
             >
               &times;
             </button>
-            <h3>{options.icon}</h3>
+            <h3 className="size-1/2 p-5 md:size-1/3 md:p-0 md:grid md:place-content-center">{options.icon}</h3>
             <form action="" onSubmit={handleSubmit} ref={form}>
-              <label htmlFor={options.first_input.id}>
+              <label htmlFor={options.first_input.id} className="text-sm md:text-base">
                 {options.first_input.label}
               </label>
               <input type="text" name={options.first_input.name} id={options.first_input.id} autoComplete={options.first_input.autoComplete}/>
-              <label htmlFor={options.second_input.id}>
+              <label htmlFor={options.second_input.id} className="text-sm md:text-base">
                 {options.second_input.label}
               </label>
               <input type="text" name={options.second_input.name} id={options.second_input.id} autoComplete={options.second_input.autoComplete} />
