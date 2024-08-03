@@ -1,10 +1,10 @@
 import SwitchTheme from "../../components/SwithTheme";
 import {FollowMouse} from "../../components/FollowMouse";
-import { Form } from "../../components/Form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import RegisterIcon from "../../assets/Icons/register-icon.svg"
 import { useAuth } from "../../context/auth.context";
 import HomeLink from "../../components/HomeLink";
+import { FormRegistration } from "../../components/FormRegistration";
 function Register() {
   const {handleRegistration, ErrorElement} = useAuth()
   return (
@@ -16,7 +16,7 @@ function Register() {
         <h1 className="w-20 aspect-square mx-auto">
           <img src={RegisterIcon} alt="Icon of a pen and paper" />
         </h1>
-        <Form func={handleRegistration}/>
+        <FormRegistration func={handleRegistration}/>
         <span className="absolute bottom-0 left-0 w-full text-center h-10 text-white">
           Already have an account?{" "}
           <Link to="/login" className="underline">
