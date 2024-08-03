@@ -54,6 +54,11 @@ export const profile = async (req, res)=> {
     if(!userFound) return res.status(400).json({message:"No user Found"})
     res.json({username: userFound.username, password:userFound.password}); 
 }
+export const getEmail = async (req, res)=> {
+    const userFound = await User.findById(req.user.id);
+    if(!userFound) return res.status(400).json({message:"No user Found"})
+    res.json({email: userFound.email}); 
+}
 export const updateData = async (req, res) => {
   const { password, NewPassword, NewUsername } = req.body;
   const userFound = await User.findById(req.user.id);
@@ -66,6 +71,18 @@ export const updateData = async (req, res) => {
     const hash = await bcrypt.hash(NewPassword, 10);
     userFound.password = hash;
   }
+  await userFound.save();
+  res.sendStatus(204);
+};
+export const updateEmail = async (req, res) => {
+  const { password, email} = req.body;
+  const userFound = await User.findById(req.user.id);
+  if (!userFound)
+    return res.status(400).json({ message: "User not found in database" });
+  const isValid = await bcrypt.compare(password, userFound.password);
+  if (!isValid) return res.status(401).json({ message: "Wrong password" });
+  if(!email) return res.status(404).json({message: "Email missing in payload"})
+  userFound.email = email;
   await userFound.save();
   res.sendStatus(204);
 };
