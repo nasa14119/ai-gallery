@@ -7,7 +7,11 @@ export const registerSchema = z.object({
         required_error: "Password is nedded"
     }).min(10 , {
         message: "Password must be of minimun 10 caracters"
-    })
+    }), 
+    email: z
+    .string()
+    .min(1, { message: "This field has to be filled." })
+    .email("This is not a valid email.")
 })
 
 export const loginSchema = z.object({

@@ -22,7 +22,7 @@ export const login = async (req, res) => {
     res.json({ id: userFound._id , username: userFound.username});
 }
 export const register = async (req, res) => {
-    const {username , password} = req.body; 
+    const {username , password, email} = req.body; 
     try {
         const userFound = await User.findOne({username});
         if(userFound) return res.status(400).json({message: "User already used"}); 
@@ -30,6 +30,7 @@ export const register = async (req, res) => {
         const newUser = new User({
           username,
           password: hash,
+          email
         });
         const userSaved = await newUser.save();
         const newImages = new Images({
@@ -81,7 +82,10 @@ export const validateToken = async (req, res) => {
     jwt.verify(token, env.SECRET_TOKEN, async (err, user) => {
         if(err)return res.sendStatus(401).json({message:"Unautorized"})
         const userFound = await User.findById(user.id)
-        if(!userFound)return res.sendStatus(401).json({message:"Unautorized"})
+        if(!userFound) {
+          res.cookie('token', "", {expires: new Date(0)}); 
+          return res.sendStatus(401).json({message:"Unautorized"})
+        }
         res.json({
             id: userFound._id, 
             username: userFound.username
