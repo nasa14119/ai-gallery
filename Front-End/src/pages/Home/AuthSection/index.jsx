@@ -1,18 +1,17 @@
 import "./styles.css";
-import { useAuth } from "../../../context/auth.context";
 import { Nav } from "../Nav";
+import {ImageGeneration} from "./sections/ImageGeneration"
+import { Prompt } from "./sections/Prompt";
+import { Settings } from "./sections/Settings";
 
 export function AuthSection() {
-  const { user } = useAuth();
   return (
     <>
       <Nav />
-      <main className="h-screen w-full flex flex-col justify-center items-center">
-        <h1 className="text-3xl md:text-5xl text-center select-none pointer-events-none">
-          <strong className="text-5xl md:text-7xl">Welcome</strong>
-          <br />
-          <span>{user.username}</span>
-        </h1>
+      <main className="min-h-screen w-full grid grid-cols-1 md:grid-cols-2 grid-rows-2 mt-[10vh] md:mt-0 md:py-[5vh] px-[5vw] gap-y-2 gap-x-10">
+        <ImageGeneration />
+        <Settings/>
+        <Prompt/>
       </main>
     </>
   );

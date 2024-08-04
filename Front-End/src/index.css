@@ -31,6 +31,7 @@
   --background: #000000; 
   --font-p: YsabeasuOffice; 
 }
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@200;400;700&display=swap');
 body{
   height: minmax(100vh, 100%);
   color: var(--color); 
@@ -41,6 +42,16 @@ body{
 h1{
   font-family: YsabeasuOffice;
   font-weight: 900;
+}
+.font-sarabun{
+  font-family: "Sarabun", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.font-sarabun-extralight{
+  font-family: "Sarabun", sans-serif;
+  font-weight: 200;
+  font-style: normal;
 }
 .dark-theme{
   --color: #ffffff;  
