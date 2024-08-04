@@ -1,11 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
 :root{
     --background-setting: #1e2125; 
-}
-.font-sarabun{
-    font-family: "Sarabun", sans-serif;
-    font-weight: 400;
-    font-style: normal;
 }
 .settings-nav ul{
     @apply flex justify-center items-center gap-x-2 text-sm md:text-2xl; 
