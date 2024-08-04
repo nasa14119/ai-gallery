@@ -8,11 +8,11 @@ export function Confirmation({err}) {
       data-state={state}
       onAnimationEnd={() => setState((prev) => false)}
     >
-      <div className="flex flex-col justify-center items-center w-3/4 md:w-1/2 h-full bg-[#db4c4c] mx-auto">
+      <div className="flex flex-col justify-center items-center w-3/4 md:w-1/2 h-full bg-[#db4c4c] mx-auto rounded-lg">
         <span className="text-primary font-h1 text-lg">
-          Error
+          Error:
         </span>
-        <div className='flex gap-x-5'><span>{err}</span></div>
+        <div className='flex gap-x-5 text-xs md:text-base'><span>{err}</span></div>
       </div>
     </div>
   );
