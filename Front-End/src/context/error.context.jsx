@@ -6,7 +6,7 @@ const ErrorContext = createContext(null);
 export const ErrorProvider = ({children}) => {
     const [Error, addError] = useMakeError()
     return (
-        <ErrorContext.Provider values={{Error, addError}}>
+        <ErrorContext.Provider value={{Error, addError}}>
             {children}
         </ErrorContext.Provider>
     )
