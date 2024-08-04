@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import { useAuth } from "../../../context/auth.context"
 import { MenuItem } from "./MenuItem"
+import { EmailIcon, useEmailModal } from "../hooks/useEmailModal"
 const UserIcon = () =>{
     return (
         <svg
@@ -35,22 +36,6 @@ const LockIcon = () =>{
       </svg>
     )
 }
-const EmailIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    className="size-full md:size-16"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
-    />
-  </svg>
-);
 const fetchUpdateData = async (body) => {
     const API = `${import.meta.env.VITE_API}/profile`
     const res = await fetch(API, {
@@ -129,6 +114,7 @@ export const Info = () =>{
     }); 
     const [isVisible, setVisibility] = useState(false)
     const {addError , ErrorElement, triggerReload} = useAuth(); 
+    const [EmailForm, handleEmail] = useEmailModal(addError)
     const handleClickOption = (v) => {
       form.current.reset()
       const options = {
@@ -136,6 +122,7 @@ export const Info = () =>{
         PASSWORD: PASSWORD_OPTIONS, 
         EMAIL: EMAIL_OPTIONS
       }
+      if(v === "EMAIL") return handleEmail(); 
       setOptions(options[v])
       setVisibility(true)
     }
@@ -180,13 +167,14 @@ export const Info = () =>{
               <input type="text" name={options.second_input.name} id={options.second_input.id} autoComplete={options.second_input.autoComplete} />
               <button
                 type="submit"
-                className="text-lg py-2 px-5 bg-green-700 text-white rounded-2xl  w-full mt-auto"
+                className="text-lg py-2 px-5 bg-green-700 text-white rounded-2xl  w-full mt-5"
               >
                 Send
               </button>
             </form>
           </div>
-            <div className={`fixed inset-0 ${isVisible?"block":"hidden"}`} onClick={() => setVisibility(prev => !prev)}></div>
+          <EmailForm/>  
+          <div className={`fixed inset-0 ${isVisible?"block":"hidden"}`} onClick={() => setVisibility(prev => !prev)}></div>
         <ErrorElement/> 
       </>
     );

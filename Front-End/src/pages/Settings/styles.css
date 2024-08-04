@@ -42,7 +42,8 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    @apply bg-[#292f3b] rounded-3xl fixed mx-auto inset-x-5 inset-y-[10%] py-10 px-5; 
+    min-height: 80vh; 
+    @apply bg-[#292f3b] rounded-3xl fixed mx-auto inset-x-5 py-10 px-5 md:justify-center; 
 }
 .info-form[data-isvisible="true"]{
     animation: forwards form-settings 250ms ease;
@@ -59,7 +60,7 @@
     justify-content: center;
     align-items: center;
 }
-.info-form label{
+.info-form label, .current-email{
     width: 100%;
     font-size: 1.3rem;
     @apply pt-5 font-bold; 
