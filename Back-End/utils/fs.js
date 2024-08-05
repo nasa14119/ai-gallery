@@ -13,3 +13,6 @@ export const safeImg = async (base64Data) => {
     }); 
     return [error, hash]
 }
+export const getHashFile = (hash) => {
+  return path.join(__dirname, "/Back-End/img", hash)
+}

@@ -1,3 +1,4 @@
+import { useTriggerError } from "../../../../context/error.context"
 import { ImageContext } from "./index"
 import { useContext } from "react"
 
@@ -13,10 +14,38 @@ export const useTextHandler = () => {
     const {message, setMessage} = useContext(ImageContext).prompt; 
     return [ message,(e) => setMessage(e.target.value)]
 }
-
+const fechForText = async (prompt) => {
+    const API = `${import.meta.env.VITE_API}/ai/text`
+    const response = await fetch(API, {
+      method: "POST",
+      body: JSON.stringify({prompt}), 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    if(response.status !== 200) throw new Error("Something wrong while fetching text")
+    const res = await response.json()
+    return res.text
+}
 export const useTextGeneration = () => {
-    const { setMessage } = useContext(ImageContext).prompt; 
-    return () => setMessage("Something from Api")
+    const { message, setMessage } = useContext(ImageContext).prompt; 
+    const triggerLoading = useTriggerLoading("TEXT"); 
+    const triggerError = useTriggerError(); 
+
+    return async () => {
+        if(!message) return triggerError("Prompt can't be empty"); 
+        triggerLoading()
+        try {
+            const text = await fechForText(message)
+            setMessage(text)
+        } catch (error) {
+            console.log(error)
+            triggerError("Somenting went wrong sending request"); 
+        }finally{
+            triggerLoading()
+        }
+    }
 }
 
 export const useImage = () => useContext(ImageContext).img.src
