@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../context/auth.context";
 
 export const EmailIcon = () => (
@@ -41,8 +41,14 @@ const fetchUpdateEmail = async (body) => {
   });
   return response
 };
-let email = await fetchGetEmail();
 export function useEmailModal(triggerError) {
+  let email = useRef(null);
+  useEffect(() => {
+    const fetchApi = async () =>{
+      email.current = await fetchGetEmail(); 
+    } 
+    fetchApi()
+  }, []);
   const { triggerReload } = useAuth();
   const [isVisible, setVisibility] = useState(false);
   const handleVisibility = () => {
@@ -69,7 +75,7 @@ export function useEmailModal(triggerError) {
         </h3>
         <span className="current-email flex flex-col ">
           <span>Current Email</span>
-          <span className="opacity-30 pl-5 text-sm md:text-base">{email}</span>
+          <span className="opacity-30 pl-5 text-sm md:text-base">{email.current}</span>
         </span>
         <button
           className="text-red-500 text-5xl absolute top-0 right-5 z-50 cursor-pointer"
