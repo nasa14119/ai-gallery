@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
       trim: true,
       default: ""
     },
-    stable_difussion: {
+    stable_diffusion: {
       type: String,
       trim: true,
       default: ""

@@ -109,3 +109,23 @@ export const validateToken = async (req, res) => {
         }); 
     })
 }
+export const getAiToken = async (id) => {
+  const { ai_tokens } = await User.findOne({_id: id})
+  return ai_tokens 
+}
+export const sendAiTokens = async (req, res) => {
+  const tokens = await getAiToken(req.user.id); 
+  return res.status(200).json(tokens)
+}
+export const updateAiTokens = async (req, res) => {
+  const { openai, stable_diffusion } = req.body
+  const tokens = await User.findOne({_id: req.user.id}); 
+  if(openai) {
+    tokens.ai_tokens.openai = openai
+  }
+  if(stable_diffusion) {
+    tokens.ai_tokens.stable_diffusion = stable_diffusion
+  }
+  await tokens.save()
+  return res.status(200).json(tokens)
+}
