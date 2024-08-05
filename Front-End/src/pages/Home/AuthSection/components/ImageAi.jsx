@@ -1,13 +1,15 @@
 import { useRef } from "react";
+import { useImage } from "../context/hooks";
 
 export function ImageAi() {
   const img = useRef(null)
+  const src = useImage(); 
   return (
-    <div className={`overflow-hidden absolute inset-0 rounded-[5rem] -z-40`}>
+    <div className={`overflow-hidden absolute inset-0 rounded-[4rem] -z-40`}>
       <PlaceHolder />
       <picture className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1721908919503-a8a1106bec3a?q=80&w=2865&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={src}
           alt=""
           className="object-cover opacity-0"
           ref={img}
@@ -20,7 +22,7 @@ export function ImageAi() {
 }
 function PlaceHolder() {
   return (
-    <div className={`absolute inset-0 -z-50 flex justify-center items-center bg-slate-500/40 opacity-20`}>
+    <div className={`absolute inset-0 -z-50 flex justify-center items-center bg-slate-500/60 opacity-20`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

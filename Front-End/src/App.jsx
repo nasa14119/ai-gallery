@@ -12,6 +12,7 @@ import { DashboardContainer } from "./pages/Dashboard/DashboardContainer";
 import { Edit } from "./pages/Dashboard/Edit";
 import { Settings } from "./pages/Settings";
 import { Error404 } from "./pages/Error/Error404";
+import { AiSettings } from "./pages/Settings/AiSettings";
 function App() {
   return (
     <ThemeProvider>
@@ -28,7 +29,8 @@ function App() {
               <Route path="add-image" element={<AddImage />} />
               <Route path="edit/:id" element={<Edit />} />
             </Route>
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/settings" element={<Settings/>} />
+            <Route path="/settings/ai" element={<AiSettings/>}/>
           </Route>
           <Route path="*" element={<Error404 />} />
         </Routes>

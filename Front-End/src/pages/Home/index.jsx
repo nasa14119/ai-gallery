@@ -3,10 +3,16 @@ import { Button } from "./Button";
 import { FollowMouse } from "../../components/FollowMouse";
 import "./styles.css"
 import { useAuth } from "../../context/auth.context";
+import { ErrorProvider } from "../../context/error.context";
 import { AuthSection } from "./AuthSection";
 function Home() {
   const { isAuth} = useAuth();
-  if (isAuth) return <AuthSection />
+  if (isAuth)
+    return (
+      <ErrorProvider>
+        <AuthSection />
+      </ErrorProvider>
+    );
   return (
     <main className="h-screen w-full flex flex-col justify-center items-center">
       <SwitchTheme />
