@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import SwitchTheme from "../../components/SwithTheme";
 import "./styles.css";
 import Loading from "../../components/Loading";
 import { useAuth } from "../../context/auth.context";
 import { Info } from "./components/Info";
 import { useConfirmDialog } from "./hooks/useConfirmDialog";
+import { Nav } from "./components/Nav";
 
 export const Settings = () => {
   const { user, isLoading, handleLogout, handleDeleteUser } = useAuth();
@@ -14,20 +14,7 @@ export const Settings = () => {
   }
   return (
     <>
-      <nav className="h-[10vh] sticky top-0 flex w-full px-5 py-3 justify-between items-center settings-nav">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/add-image">Add Image</Link>
-          </li>
-        </ul>
-        <SwitchTheme isStatic />
-      </nav>
+      <Nav/>
       <main className="h-[90vh] w-[min(100%,_800px)] mx-auto flex flex-col items-center justify-start font-sarabun">
         <h1 className="px-4 md:px-5 text-2xl md:text-4xl text-left w-full font-sarabun font-bold">
           Settings {user.username}
@@ -72,8 +59,8 @@ export const Settings = () => {
             </span>
             <span>Log out of the acount</span>
           </li>
-          <Link to="ai">
-            <li className="bg-gray-600/40" onClick={() => handleLogout()}>
+          <Link to="/settings/ai">
+            <li className="bg-gray-600/40">
               <span className="bg-gray-900">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

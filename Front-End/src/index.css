@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@200;400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -31,7 +32,6 @@
   --background: #000000; 
   --font-p: YsabeasuOffice; 
 }
-@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@200;400;700&display=swap');
 body{
   height: minmax(100vh, 100%);
   color: var(--color); 
