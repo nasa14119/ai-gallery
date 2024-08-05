@@ -1,5 +1,6 @@
 import User from "../models/user.model.js"; 
 import Images from "../models/images.model.js"
+import Ai_options from "../models/ai_options.model.js"
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwt.js";
 import jwt from "jsonwebtoken";
@@ -38,6 +39,7 @@ export const register = async (req, res) => {
           images: [],
         }); 
         newImages.save(); 
+        await new Ai_options({user: userSaved._id}).save()
         const token = await generateToken({id: userSaved._id });
         res.cookie("token", token, COOKIE_OPTIONS);
         res.json({ id: newUser._id, username:newUser.username});
