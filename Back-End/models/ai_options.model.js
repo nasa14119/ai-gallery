@@ -21,7 +21,19 @@ const ai_option_schema = new mongoose.Schema({
   bucked: {
     type: String, 
     require: false, 
-  }
+  },
+  ai_tokens: {
+    openai: {
+      type: String,
+      trim: true,
+      default: ""
+    },
+    stable_diffusion: {
+      type: String,
+      trim: true,
+      default: ""
+    },
+  },
 });
 
 export default mongoose.model("Ai_options", ai_option_schema); 

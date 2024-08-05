@@ -1,14 +1,15 @@
 import crypto from "node:crypto"
 import path from "node:path"
 import { writeFile } from "node:fs/promises";
+const __dirname = path.resolve(); 
+
 export const safeImg = async (base64Data) => {
-    let success = true; 
-    const __dirname = path.resolve(); 
+    let error = null; 
     const hash = crypto.randomBytes(18).toString("hex")+".png"; 
     const directory = path.join(__dirname, "/Back-End/img", hash)
     await writeFile(directory, base64Data, "base64", (error) => {
       console.log(error);
-      success = false;
+      error = "Something went wrong saving the file" 
     }); 
-    if(!success) throw Error("Something went wrong while saving file")
+    return [error, hash]
 }

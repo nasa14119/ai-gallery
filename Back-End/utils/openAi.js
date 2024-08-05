@@ -7,18 +7,20 @@ export class OpenAi {
     this.API_KEY = api;
   }
   async getDescription(prompt = "") {
-    const openai = createOpenAI({
-      apiKey: this.API_KEY,
-      compatibility: "strict",
-    });
-    console.log("loading...");
-    const res = await generateText({
-      model: openai("gpt-3.5-turbo-0125"),
-      system: SYSTEM,
-      prompt,
-    });
-    console.clear();
-    return [res.text.replace(/\n/, "")];
+    try {
+      const openai = createOpenAI({
+        apiKey: this.API_KEY,
+        compatibility: "strict",
+      });
+      const res = await generateText({
+        model: openai("gpt-3.5-turbo-0125"),
+        system: SYSTEM,
+        prompt,
+      });
+      return [res.text.replace(/\n/, "")];
+    } catch (error) {
+      throw new Error("Something went wrong prossesing request")
+    }
   }
   async getImage(prompt) {
     if (!prompt) throw Error("No prompt was provided");
@@ -41,11 +43,7 @@ export class OpenAi {
       }
     );
     const { data } = await response.json();
-    let isSafe = true
-    safeImg(data[0].b64_json).catch(() => (isSafe = false)); 
+    let isSave = true
+    safeImg(data[0].b64_json).catch(() => (isSave = false)); 
   }
 }
-const x = new OpenAi(
-  "sk-proj-7qSFPOi1a6LLk4lehBgLT3BlbkFJ8h2Pgd6Tn0EA4Q69P0Mg"
-);
-console.log(await x.getImage("Montain"));

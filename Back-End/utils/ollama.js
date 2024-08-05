@@ -1,17 +1,20 @@
 import { ollama } from "ollama-ai-provider"
 import { generateText } from "ai"
-import { SYSTEM } from "../const/ai";
+import { SYSTEM } from "../const/ai.js";
 
 const model = ollama("llama2"); 
 export class Ollama {
     async getDescription (prompt = "") {
-        console.log("loading...")
-        const res = await generateText({
-            model, 
-            system: SYSTEM, 
-            prompt
-        })
-        console.clear()
-        return [res.text.replace(/\n/, "")]
+        try {
+            const res = await generateText({
+                model, 
+                temperature: 0.8,
+                system: SYSTEM, 
+                prompt
+            })
+            return [res.text.replace(/\n/, "")]
+        } catch (error) {
+            throw new Error("Error sending request")            
+        }
     }
 }

@@ -16,18 +16,6 @@ const userSchema = new mongoose.Schema({
     require: false,
     trim: true,
   },
-  ai_tokens: {
-    openai: {
-      type: String,
-      trim: true,
-      default: ""
-    },
-    stable_diffusion: {
-      type: String,
-      trim: true,
-      default: ""
-    },
-  },
 });
 
 export default mongoose.model("User", userSchema); 

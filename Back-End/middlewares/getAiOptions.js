@@ -7,6 +7,8 @@ export const getAiOptions = async (req, _, next) => {
   const values = {
     image_model: options.image_model,
     text_model: options.text_model,
+    openai:options.ai_tokens.openai,
+    stable_diffusion:options.ai_tokens.stable_diffusion,
     cache_image: options.cache_image ? options.cache_image : null,
     bucket : options.cache_image ? options.cache_image : null
   }
