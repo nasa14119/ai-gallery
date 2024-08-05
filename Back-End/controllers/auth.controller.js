@@ -87,7 +87,7 @@ export const updateEmail = async (req, res) => {
   res.sendStatus(204);
 };
 export const deleteUser = async (req, res) => {
-  const ImagesFound = await Images.deleteMany({ user: req.user.id });
+  const ImagesFound = await Images.findOneAndDelete({user: req.user.id})
   if (!ImagesFound) return res.sendStatus(500);
   const userFound = await User.findByIdAndDelete(req.user.id);
   if(!userFound) return res.sendStatus(500); 
