@@ -2,6 +2,7 @@ import path from "path"
 import express  from "express";
 import auth from "./routes/auth.routes.js"
 import images from "./routes/images.routes.js"
+import ai from "./routes/ai.routes.js"
 import cookieParser from "cookie-parser";
 import cors from "cors"; 
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 process.env.NODE_ENV !== "PRODUCTION" && app.use("/", (req, res, next) => {console.log(req.path); next()})
 app.use('/api', auth)
 app.use('/api', images); 
+app.use('/api/ai', ai); 
 
 if(process.env.NODE_ENV === "PRODUCTION"){
   const __dirname = path.resolve(); 
