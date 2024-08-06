@@ -41,9 +41,14 @@ app.post("/image", validateSchema(text_prompt), async (req, res) => {
       model: image_model,
       apiKey,
     });
-    res.status(200).sendFile(getHashFile(ai_gen_image));
+    res.status(200).sendFile(getHashFile(ai_gen_image)+".png");
   } catch (error) {
     res.status(500).send({ message: "Error in request" });
   }
 });
+app.get("/cached-image", (req, res) =>{
+  const cache = req.ai_options.cache_image
+  if(!cache) res.status(404).send({message: "No image cached"}); 
+  res.sendFile(getHashFile(cache+".png"))
+})
 export default app;

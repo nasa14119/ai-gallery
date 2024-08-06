@@ -1,18 +1,29 @@
-import crypto from "node:crypto"
-import path from "node:path"
-import { writeFile } from "node:fs/promises";
-const __dirname = path.resolve(); 
+import crypto from "node:crypto";
+import path from "node:path";
+import { writeFile, unlink } from "node:fs/promises";
+export const __dirname = path.resolve();
 
-export const safeImg = async (base64Data) => {
-    let error = null; 
-    const hash = crypto.randomBytes(18).toString("hex")+".png"; 
-    const directory = path.join(__dirname, "/Back-End/img", hash)
-    await writeFile(directory, base64Data, "base64", (error) => {
-      console.log(error);
-      error = "Something went wrong saving the file" 
-    }); 
-    return [error, hash]
-}
+export const saveImgBase64 = async (base64Data, hash) => {
+  let error = null;
+  const directory = path.join(__dirname, "/Back-End/img", hash + ".png");
+  await writeFile(directory, base64Data, "base64", (error) => {
+    console.log(error);
+    error = "Something went wrong saving the file";
+  });
+  return [error, hash];
+};
+
+export const getHash = () => crypto.randomBytes(18).toString("hex");
+
+export const removeCache = async (hash) => {
+  let error = null;
+  const directory = path.join(__dirname, "/Back-End/img", hash + ".png");
+  await unlink(directory, (e) => {
+    console.log(e);
+    error = "Somenthing went wrong deleting file";
+  });
+  return error;
+};
 export const getHashFile = (hash) => {
-  return path.join(__dirname, "/Back-End/img", hash)
-}
+  return path.join(__dirname, "/Back-End/img", hash);
+};

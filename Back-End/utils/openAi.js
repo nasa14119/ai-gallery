@@ -1,7 +1,7 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { SYSTEM } from "../const/ai.js";
-import { safeImg } from "./fs.js";
+import { saveImg } from "./fs.js";
 export class OpenAi {
   constructor(api) {
     this.API_KEY = api;
@@ -43,7 +43,10 @@ export class OpenAi {
       }
     );
     const { data } = await response.json();
-    let isSave = true
-    safeImg(data[0].b64_json).catch(() => (isSave = false)); 
+    saveImg(data[0].b64_json); 
+    return {
+      data, 
+      hash
+    }
   }
 }
