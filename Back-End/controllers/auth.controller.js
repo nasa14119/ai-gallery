@@ -112,7 +112,7 @@ export const validateToken = async (req, res) => {
     })
 }
 export const getAiToken = async (id) => {
-  const { ai_tokens } = await Ai_options.findOne({_id: id})
+  const { ai_tokens } = await Ai_options.findOne({user: id})
   return ai_tokens 
 }
 export const sendAiTokens = async (req, res) => {
@@ -121,7 +121,7 @@ export const sendAiTokens = async (req, res) => {
 }
 export const updateAiTokens = async (req, res) => {
   const { openai, stable_diffusion } = req.body
-  const tokens = await Ai_options.findOne({_id: req.user.id}); 
+  const tokens = await Ai_options.findOne({user: req.user.id}); 
   if(openai) {
     tokens.ai_tokens.openai = openai
   }
