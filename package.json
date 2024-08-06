@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "dev-server": "node --watch Back-End/index.js",
+    "start": "node Back-End/index.js",
     "dev": "vite ./Front-End --port 3000",
-    "build": "vite ./Front-End build",
-    "preview": "vite ./Front-End  preview"
+    "build": "vite build ./Front-End",
+    "preview": "vite preview ./Front-End"
   },
   "keywords": [],
   "author": "",
