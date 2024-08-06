@@ -11,7 +11,7 @@ export function ImageAi() {
         <img
           src={src}
           alt=""
-          className="object-cover opacity-0"
+          className="object-cover min-h-full opacity-0"
           ref={img}
           onChange={() => img.current.classList.remove("animation-load")}
           onLoad={() => img.current.classList.add("animation-load")}
