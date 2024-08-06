@@ -51,4 +51,12 @@ app.get("/cached-image", (req, res) =>{
   if(!cache) res.status(404).send({message: "No image cached"}); 
   res.sendFile(getHashFile(cache+".png"))
 })
+app.get("/text/is-auth", (req, res) =>{
+  const { openai , text_model, image_model } = req.ai_options;
+  if(text_model === "OPENAI" || image_model === "OPENAI" ){
+    return res.status(200).send({isAuth: !!openai})
+  } 
+  res.sendStatus(404); 
+
+})
 export default app;
