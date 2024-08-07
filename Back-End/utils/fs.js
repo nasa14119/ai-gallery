@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import path from "node:path";
 import { writeFile, unlink } from "node:fs/promises";
+import { existsSync } from "node:fs";
 export const __dirname = path.resolve();
 
 export const saveImgBase64 = async (base64Data, hash) => {
@@ -18,6 +19,8 @@ export const getHash = () => crypto.randomBytes(10).toString("hex");
 export const removeCache = async (hash) => {
   let error = null;
   const directory = path.join(__dirname, "/Back-End/img", hash + ".png");
+  const isCached = existsSync(directory); 
+  if(!isCached) return error
   await unlink(directory, (e) => {
     console.log(e);
     error = "Somenthing went wrong deleting file";
