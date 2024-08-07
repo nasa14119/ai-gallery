@@ -40,19 +40,34 @@ export function AiSettings() {
     prev_tokens.current = res;
     setToken(res)
   }
+  const delteToken = async (type) => {
+    const res = await fetch(`${import.meta.env.VITE_API}/profile/tokens/openai`, {
+      credentials: "include", 
+      method: "DELETE"
+    })
+    if(!res.ok) return 
+    window.location.reload()
+  }
   if (!prev_tokens.current || !tokens) return null;
   return (
     <>
       <Nav />
       <main className="max-w-[500px] mx-auto flex flex-col gap-y-4">
-        <OpenAiToken token={tokens.openai} setToken={handleInput("openai")} />
+        <OpenAiToken
+          token={tokens.openai}
+          setToken={handleInput("openai")}
+          delteToken={() => delteToken("openai")}
+        />
         <StableDiffusionToken
           token={tokens.stable_diffusion}
           setToken={handleInput("stable_diffusion")}
         />
         {(prev_tokens.current.openai !== tokens.openai ||
           prev_tokens.current.stable_diffusion !== tokens.stable_diffusion) && (
-          <button className="mt-auto uppercase bg-green-700 w-1/2 ml-auto py-2 rounded-3xl animation-load" onClick={handleSubmit}>
+          <button
+            className="mt-auto uppercase bg-green-700 w-1/2 ml-auto py-2 rounded-3xl animation-load"
+            onClick={handleSubmit}
+          >
             save
           </button>
         )}

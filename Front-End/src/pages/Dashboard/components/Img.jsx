@@ -44,13 +44,6 @@ function Controls({Delete, id}) {
     <ul className="flex justify-end items-center gap-x-2 relative z-40">
       <li className="cursor-pointer">
         <Delete />
-        {/* <DeleteCan
-          className="h-5 aspect-square"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDelete();
-          }}
-        /> */}
       </li>
       <li className="cursor-pointer">
         <Link to={`edit/${id}`}>

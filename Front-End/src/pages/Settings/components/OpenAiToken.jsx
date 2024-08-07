@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { DeleteCan } from "../../../assets/Icons/DeleteCan"
 import { OpenAiIcon } from "../assets/OpenAiIcon";
 import { EyeClose, EyeOpen } from "../assets/Eyes";
-export function OpenAiToken({ token, setToken }) {
+export function OpenAiToken({ token, setToken, delteToken}) {
   const [edit, setEdit] = useState(!token);
   return (
     <div className="font-sarabun text-xl flex flex-col gap-y-2">
@@ -30,6 +31,12 @@ export function OpenAiToken({ token, setToken }) {
           onClick={() => setEdit((prev) => !prev)}
         >
           {edit ? <EyeOpen /> : <EyeClose />}
+        </span>
+        <span
+          className="w-[5%] cursor-pointer aspect-square absolute right-10 text-slate-400"
+          onClick={delteToken}
+        >
+          <DeleteCan/>
         </span>
       </span>
     </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Icon from "../assets/Icons/DeleteCan"
+import {DeleteCan as Icon} from "../assets/Icons/DeleteCan"
 import { useImageContext } from "../context/images.context";
 import { getTheme } from "../context/theme.context"
 

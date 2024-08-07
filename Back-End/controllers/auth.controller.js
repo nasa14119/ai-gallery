@@ -119,6 +119,12 @@ export const sendAiTokens = async (req, res) => {
   const tokens = await getAiToken(req.user.id); 
   return res.status(200).json(tokens)
 }
+export const deleteOpenAiToken = async (req, res) => {
+  const db = await Ai_options.findOne({user: req.user.id})
+  db.ai_tokens.openai = ""
+  await db.save(); 
+  res.sendStatus(204);
+}
 export const updateAiTokens = async (req, res) => {
   const { openai, stable_diffusion } = req.body
   const tokens = await Ai_options.findOne({user: req.user.id}); 
