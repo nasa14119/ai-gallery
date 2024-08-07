@@ -10,7 +10,7 @@ export const getAiOptions = async (req, _, next) => {
     openai:options.ai_tokens.openai,
     stable_diffusion:options.ai_tokens.stable_diffusion,
     cache_image: options.cache_image ? options.cache_image : null,
-    bucket : options.cache_image ? options.cache_image : null
+    bucket : options.bucket ? options.bucket : null
   }
   req.ai_options = values
   next()

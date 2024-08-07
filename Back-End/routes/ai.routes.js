@@ -5,6 +5,7 @@ import { getPromptAi, getImageAi } from "../models/ai.model.js";
 import { validateSchema } from "../middlewares/validatorRequest.js";
 import { text_prompt } from "../schemas/ai.schema.js";
 import { getHashFile } from "../utils/fs.js";
+import { cacheImage } from "../utils/cache.js";
 
 const app = Router();
 app.use("*", authRequired, getAiOptions);
@@ -30,26 +31,28 @@ app.post("/image", validateSchema(text_prompt), async (req, res) => {
   const { image_model, openai, stable_diffusion } = req.ai_options;
   const { prompt } = req.body;
   let apiKey; 
-  if (image_model === "OPENAI" && !openai)
-    return res.status(401).send({ message: "Api key need to be provided" });
-  if (image_model === "STABLE" && !stable_diffusion)
-    return res.status(401).send({ message: "Api key need to be provided" });
+  // Check For api key
+  if (image_model === "OPENAI" && !openai) return res.status(401).send({ message: "Api key need to be provided" });
+  if (image_model === "STABLE" && !stable_diffusion) return res.status(401).send({ message: "Api key need to be provided" });
   if(image_model === "OPENAI") apiKey = openai
   if(image_model === "STABLE") apiKey = stable_diffusion
+
   try {
     const ai_gen_image = await getImageAi(prompt, {
       model: image_model,
       apiKey,
     });
-    res.status(200).sendFile(getHashFile(ai_gen_image)+".png");
+    const path_cache_image = await cacheImage(ai_gen_image, req.user.id)
+    res.status(200).sendFile(path_cache_image)
   } catch (error) {
+    console.log(error)
     res.status(500).send({ message: "Error in request" });
   }
 });
 app.get("/cached-image", (req, res) =>{
   const cache = req.ai_options.cache_image
   if(!cache) res.status(404).send({message: "No image cached"}); 
-  res.sendFile(getHashFile(cache+".png"))
+  res.status(200).sendFile(getHashFile(cache)+".png")
 })
 app.get("/text/is-auth", (req, res) =>{
   const { openai , text_model, image_model } = req.ai_options;

@@ -18,7 +18,7 @@ const ai_option_schema = new mongoose.Schema({
     type: String,
     require: false, 
   },
-  bucked: {
+  bucket: {
     type: String, 
     require: false, 
   },

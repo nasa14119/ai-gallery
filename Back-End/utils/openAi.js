@@ -1,7 +1,7 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { SYSTEM } from "../const/ai.js";
-import { getHash, saveImgBase64 } from "./fs.js";
+import { getHash } from "./fs.js";
 export class OpenAi {
   constructor(api) {
     this.API_KEY = api;
@@ -17,37 +17,42 @@ export class OpenAi {
         system: SYSTEM,
         prompt,
       });
+      console.log(res)
       return [res.text.replace(/\n/, "")];
     } catch (error) {
+      console.log(error)
       throw new Error("Something went wrong prossesing request")
     }
   }
   async getImage(prompt) {
     if (!prompt) throw Error("No prompt was provided");
-    const response = await fetch(
-      `https://api.openai.com/v1/images/generations
-`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${this.API_KEY}`,
-          "upstash-forward-Authorization": `Bearer ${this.API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          prompt,
-          n: 1,
-          size: "1024x1024",
-          response_format: "b64_json",
-        }),
-      }
-    );
-    const { data } = await response.json();
-    const hash = getHash() 
-    saveImgBase64(data[0].b64_json, hast); 
-    return {
-      data, 
-      hash
+    try {
+      const response = await fetch(
+        `https://api.openai.com/v1/images/generations
+  `,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${this.API_KEY}`,
+            "upstash-forward-Authorization": `Bearer ${this.API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            prompt,
+            n: 1,
+            size: "1024x1024",
+            response_format: "b64_json",
+          }),
+        }
+      );
+      const { data } = await response.json();
+      const hash = getHash();
+      return {
+        data: data[0].b64_json,
+        hash,
+      };
+    } catch (error) {
+      console.log(error)
     }
   }
 }

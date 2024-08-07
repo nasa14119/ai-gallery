@@ -13,7 +13,7 @@ export const saveImgBase64 = async (base64Data, hash) => {
   return [error, hash];
 };
 
-export const getHash = () => crypto.randomBytes(18).toString("hex");
+export const getHash = () => crypto.randomBytes(10).toString("hex");
 
 export const removeCache = async (hash) => {
   let error = null;

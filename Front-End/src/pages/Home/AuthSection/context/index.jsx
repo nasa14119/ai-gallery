@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { useTriggerError } from "../../../../context/error.context";
 
 const inicialContext = {
@@ -21,6 +21,18 @@ export const ImageProvider = ({children}) => {
     const triggerLoadingText = () => {
       setLoading((prev) => ({ ...prev, message: !prev.message }));
     };
+    useEffect(() =>{
+        const fetchCache = async () => {
+            const API = `${import.meta.env.VITE_API}/ai/cached-image`
+            const response = await fetch(API, {
+              credentials: "include",
+            });
+            if(response.status !== 200) throw new Error("Something went erong sending the request")
+            const blob = await response.blob(); 
+            return URL.createObjectURL(blob)
+        }
+        fetchCache().then(v => setSrc(v))
+    },[])
     const VALUES = {
         img: {
             src, 

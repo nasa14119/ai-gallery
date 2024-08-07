@@ -25,6 +25,5 @@ export const getPromptAi = async (prompt = "", options = OPTIONS_OLLAMA) => {
 export const getImageAi = async (prompt = "", options = OPTIONS_OPENAI) => {
     let ai; 
     if(options.model === "OPENAI") ai = new OpenAi(options.apiKey)
-        
-    return "4a303439354fb75f71cc054b3db6503cbdc5.png"
+    return await ai.getImage(prompt)
 }
