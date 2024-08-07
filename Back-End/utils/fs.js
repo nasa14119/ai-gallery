@@ -1,13 +1,17 @@
 import crypto from "node:crypto";
 import path from "node:path";
-import { writeFile, unlink } from "node:fs/promises";
+import { writeFile, unlink, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { env } from "./env.js"
-export const __dirname = path.resolve();
 
+export const __dirname = path.resolve();
+export const setUpImg = async () =>{
+  const directory = path.join(__dirname, "Back-End", "img");
+  await mkdir(directory, {recursive: true})
+  return directory
+}
 export const saveImgBase64 = async (base64Data, hash) => {
   let error = null;
-  const directory = path.join(__dirname, "Back-End", env.PATH_IMG, hash + ".png");
+  const directory = path.join(await setUpImg(), hash + ".png");
   await writeFile(directory, base64Data, "base64", (error) => {
     console.log(error);
     error = "Something went wrong saving the file";
