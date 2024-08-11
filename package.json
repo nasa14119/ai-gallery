@@ -15,6 +15,7 @@
   "author": "",
   "dependencies": {
     "@ai-sdk/openai": "^0.0.40",
+    "@aws-sdk/client-s3": "^3.624.0",
     "ai": "^3.2.45",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
