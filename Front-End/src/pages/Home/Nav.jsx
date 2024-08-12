@@ -8,7 +8,7 @@ import { DashBoardIcon } from "../../assets/Icons/Dashboard";
 export function Nav() {
   const { handleLogout } = useAuth();
   return (
-    <nav className="h-[10vh] fixed top-0 flex w-full p-3 justify-end items-center gap-x-2">
+    <nav className="h-[10vh] fixed top-0 flex w-full p-3 justify-end items-center gap-x-2 z-50">
       <Link to="/dashboard">
         <DashBoardIcon />
       </Link>
