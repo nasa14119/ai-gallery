@@ -5,6 +5,7 @@ import images from "./routes/images.routes.js"
 import ai from "./routes/ai.routes.js"
 import cookieParser from "cookie-parser";
 import cors from "cors"; 
+import saveImgRouter from "./routes/save.routes.js"
 
 const app = express(); 
 
@@ -29,6 +30,7 @@ process.env.NODE_ENV !== "PRODUCTION" && app.use("/", (req, res, next) => {conso
 app.use('/api', auth)
 app.use('/api', images); 
 app.use('/api/ai', ai); 
+app.use('/', saveImgRouter)
 
 if(process.env.NODE_ENV === "PRODUCTION"){
   const __dirname = path.resolve(); 

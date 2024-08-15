@@ -6,6 +6,7 @@ import { validateSchema } from "../middlewares/validatorRequest.js";
 import { text_prompt } from "../schemas/ai.schema.js";
 import { getHashFile } from "../utils/fs.js";
 import { cacheImage } from "../utils/cache.js";
+import { checkApiKey } from "../controllers/ai.controller.js";
 
 const app = Router();
 app.use("*", authRequired, getAiOptions);
@@ -27,21 +28,11 @@ app.post("/text", validateSchema(text_prompt), async (req, res) => {
     res.status(500).send({ message: "Error in request" });
   }
 });
-app.post("/image", validateSchema(text_prompt), async (req, res) => {
-  const { image_model, openai, stable_diffusion } = req.ai_options;
-  const { prompt } = req.body;
-  let apiKey; 
-  // Check For api key
-  if (image_model === "OPENAI" && !openai) return res.status(401).send({ message: "Api key need to be provided" });
-  if (image_model === "STABLE" && !stable_diffusion) return res.status(401).send({ message: "Api key need to be provided" });
-  if(image_model === "OPENAI") apiKey = openai
-  if(image_model === "STABLE") apiKey = stable_diffusion
 
+app.post("/image", validateSchema(text_prompt), checkApiKey ,async (req, res) => {
+  const { prompt } = req.body;
   try {
-    const ai_gen_image = await getImageAi(prompt, {
-      model: image_model,
-      apiKey,
-    });
+    const ai_gen_image = await getImageAi(prompt, req.options_image );
     const path_cache_image = await cacheImage(ai_gen_image, req.user.id)
     res.status(200).sendFile(path_cache_image)
   } catch (error) {
@@ -49,10 +40,16 @@ app.post("/image", validateSchema(text_prompt), async (req, res) => {
     res.status(500).send({ message: "Error in request" });
   }
 });
-app.get("/cached-image", (req, res) =>{
+
+app.get("/cached-image", async (req, res) =>{
   const cache = req.ai_options.cache_image
-  if(!cache) res.status(404).send({message: "No image cached"}); 
-  res.status(200).sendFile(getHashFile(cache)+".png")
+  if(!cache) return res.status(204).json({message:"No cache in db"});
+  try {
+    const file_path = await getHashFile(cache); 
+    return res.sendFile(file_path)
+  } catch (err) {
+    return res.status(204).json({message:"No file found"});
+  } 
 })
 app.get("/text/is-auth", (req, res) =>{
   const { openai , text_model, image_model } = req.ai_options;
