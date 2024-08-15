@@ -8,7 +8,7 @@ export class CloudFlare {
       accessKeyId: options.accessKeyId, 
       secretAccessKey: options.secretAccessKey
     }
-
+    console.log(credentials)
     this.client = new S3Client({
       region: "auto",
       credentials, 

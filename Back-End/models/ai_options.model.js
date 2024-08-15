@@ -34,7 +34,7 @@ const ai_option_schema = new mongoose.Schema({
       required: true,
       default: "",
     },
-    secretAccesKey: {
+    secretAccessKey: {
       type: String,
       required: true,
       default: "",

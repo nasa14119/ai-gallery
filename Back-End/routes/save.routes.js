@@ -12,6 +12,7 @@ app.get("/img/:hash", authRequired, getBucketData, async (req, res) => {
   const cloudflare = new CloudFlare(req.bucket);
   try {
     const file = await cloudflare.getImageFromBucket(req.params.hash);
+    console.log(file)
     file.pipe(res)
   } catch (error) {
     res.sendStatus(404)
@@ -39,18 +40,20 @@ app.get(
       const dbData = await Ai.findOne({ user: req.user.id });
       const cache_hash = dbData.cache_image;
       dbData.cache_image = "";
+      console.log(req.bucket)
       if(!cache_hash) throw new Error("No cached image save")
-      await dbData.save();
+      // await dbData.save();
       // Inicialize bucket with credentials
       const bucket = new CloudFlare(req.bucket);
       await bucket.sendToBucketHash(cache_hash);
       // Get src to save image in mongo
-      const src = `${process.env.PAGE_URL}/${cache_hash}`;options.endpoint
+      const src = `${process.env.PAGE_URL}/${cache_hash}`;
       req.body.src = src;
       req.body.size = "";
       req.body.title = "";
       next();
     } catch (error) {
+      console.log(error)
       res.sendStatus(500);
     }
   },

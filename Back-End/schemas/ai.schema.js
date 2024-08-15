@@ -7,5 +7,5 @@ export const putBucketBody = z.object({
   bucket_name: z.string().optional(),
   endpoint: z.string().optional(), 
   accessKeyId: z.string().optional(),
-  secretAccesKey: z.string().optional(),
+  secretAccessKey: z.string().optional(),
 })
