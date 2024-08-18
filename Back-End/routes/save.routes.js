@@ -42,7 +42,7 @@ app.get(
       dbData.cache_image = "";
       console.log(req.bucket)
       if(!cache_hash) throw new Error("No cached image save")
-      // await dbData.save();
+      await dbData.save();
       // Inicialize bucket with credentials
       const bucket = new CloudFlare(req.bucket);
       await bucket.sendToBucketHash(cache_hash);
