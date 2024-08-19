@@ -49,6 +49,8 @@ app.delete("/api/save/bucket", authRequired, async (req, res) => {
   }
 });
 app.get("/api/save/bucket", authRequired, getBucketData, async (req, res) => {
+  const isEmpty = Object.values(req.bucket).every((v) => v === "");
+  if (isEmpty) return res.status(404).send(null);
   res.send({ ...req.bucket });
 });
 
