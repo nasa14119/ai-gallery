@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import { AuthProvider } from "./context/auth.context";
 import { ThemeProvider } from "./context/theme.context";
 import Dashboard from "./pages/Dashboard";
-import {AddImage} from "./pages/Dashboard/AddImage"
+import { AddImage } from "./pages/Dashboard/AddImage";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import AlReadyLogin from "./pages/AlReadyLogin";
 import { DashboardContainer } from "./pages/Dashboard/DashboardContainer";
@@ -13,6 +13,7 @@ import { Edit } from "./pages/Dashboard/Edit";
 import { Settings } from "./pages/Settings";
 import { Error404 } from "./pages/Error/Error404";
 import { AiSettings } from "./pages/Settings/AiSettings";
+import { SettingsContainer } from "./pages/Settings/SettingsContainer";
 function App() {
   return (
     <ThemeProvider>
@@ -29,8 +30,10 @@ function App() {
               <Route path="add-image" element={<AddImage />} />
               <Route path="edit/:id" element={<Edit />} />
             </Route>
-            <Route path="/settings" element={<Settings/>} />
-            <Route path="/settings/ai" element={<AiSettings/>}/>
+            <Route path="/settings" element={<SettingsContainer />}>
+              <Route index element={<Settings />} />
+              <Route path="ai" element={<AiSettings />} />
+            </Route>
           </Route>
           <Route path="*" element={<Error404 />} />
         </Routes>

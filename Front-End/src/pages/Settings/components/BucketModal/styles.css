@@ -1,0 +1,38 @@
+@keyframes open-modal {
+  from {
+    display: flex;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes hide-modal {
+  from {
+    display: flex;
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+.modal-bucket[data-isopen="true"] {
+  display: flex;
+  animation: forwards open-modal 250ms ease;
+}
+.modal-bucket[data-isopen="false"] {
+  display: none;
+  animation: forwards hide-modal 250ms ease;
+}
+.input-bucket {
+  @apply bg-transparent px-5 py-2 border border-slate-900 rounded-2xl focus:outline-none focus:border-slate-200 text-[12px] text-slate-300 caret-slate-200 placeholder:text-slate-200/50;
+}
+.label-bucket {
+  @apply flex flex-col text-sm;
+}
+#submit-bucket {
+  @apply bg-transparent px-5 py-2 rounded-2xl text-black border bg-slate-200 focus:outline-none focus:bg-slate-300 border-none ease-out duration-300 transition-colors;
+}

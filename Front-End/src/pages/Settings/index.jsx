@@ -14,7 +14,7 @@ export const Settings = () => {
   }
   return (
     <>
-      <Nav/>
+      {/* <Nav/> */}
       <main className="h-[90vh] w-[min(100%,_800px)] mx-auto flex flex-col items-center justify-start font-sarabun">
         <h1 className="px-4 md:px-5 text-2xl md:text-4xl text-left w-full font-sarabun font-bold">
           Settings {user.username}

@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Nav } from "./components/Nav";
 import { OpenAiToken } from "./components/OpenAiToken";
 import { StableDiffusionToken } from "./components/StableDiffusionToken";
+import { BucketSetting } from "./components/BucketSetting";
+import { useErrorComponent } from "../../context/error.context";
 
 export function AiSettings() {
   const [tokens, setToken] = useState({ openai: "", stable_diffusion: "" });
+  const Error = useErrorComponent();
   const prev_tokens = useRef(null);
   useEffect(() => {
     const fetchApi = async () => {
@@ -38,21 +40,23 @@ export function AiSettings() {
     });
     const res = await response.json();
     prev_tokens.current = res;
-    setToken(res)
-  }
+    setToken(res);
+  };
   const delteToken = async (type) => {
-    const res = await fetch(`${import.meta.env.VITE_API}/profile/tokens/openai`, {
-      credentials: "include", 
-      method: "DELETE"
-    })
-    if(!res.ok) return 
-    window.location.reload()
-  }
+    const res = await fetch(
+      `${import.meta.env.VITE_API}/profile/tokens/openai`,
+      {
+        credentials: "include",
+        method: "DELETE",
+      }
+    );
+    if (!res.ok) return;
+    window.location.reload();
+  };
   if (!prev_tokens.current || !tokens) return null;
   return (
     <>
-      <Nav />
-      <main className="max-w-[500px] mx-auto flex flex-col gap-y-4">
+      <main className="max-w-[500px] mx-auto flex flex-col gap-y-4 come-to-view">
         <OpenAiToken
           token={tokens.openai}
           setToken={handleInput("openai")}
@@ -62,6 +66,7 @@ export function AiSettings() {
           token={tokens.stable_diffusion}
           setToken={handleInput("stable_diffusion")}
         />
+        <BucketSetting />
         {(prev_tokens.current.openai !== tokens.openai ||
           prev_tokens.current.stable_diffusion !== tokens.stable_diffusion) && (
           <button
@@ -72,6 +77,7 @@ export function AiSettings() {
           </button>
         )}
       </main>
+      <Error />
     </>
   );
 }
