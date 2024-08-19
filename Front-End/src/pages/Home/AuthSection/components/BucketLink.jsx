@@ -11,6 +11,7 @@ function BucketLink() {
     }).then((r) => {
       if (r.status === 404) {
         setState(true);
+        return;
       }
       setState(false);
     });

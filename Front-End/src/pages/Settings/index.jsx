@@ -4,7 +4,6 @@ import Loading from "../../components/Loading";
 import { useAuth } from "../../context/auth.context";
 import { Info } from "./components/Info";
 import { useConfirmDialog } from "./hooks/useConfirmDialog";
-import { Nav } from "./components/Nav";
 
 export const Settings = () => {
   const { user, isLoading, handleLogout, handleDeleteUser } = useAuth();
@@ -14,7 +13,6 @@ export const Settings = () => {
   }
   return (
     <>
-      {/* <Nav/> */}
       <main className="h-[90vh] w-[min(100%,_800px)] mx-auto flex flex-col items-center justify-start font-sarabun">
         <h1 className="px-4 md:px-5 text-2xl md:text-4xl text-left w-full font-sarabun font-bold">
           Settings {user.username}

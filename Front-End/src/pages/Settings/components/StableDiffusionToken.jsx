@@ -8,7 +8,7 @@ export function StableDiffusionToken({ token, setToken }) {
       <span className="flex h-10 items-center gap-x-2 p-1">
         <img src={img} alt="" className="h-full" />
         <span className="text-slate-400 capitalize">
-          Stable Diffusion Token
+          Stable Diffusion Token (coming soon)
         </span>
       </span>
       <span className="text-base px-5 border border-slate-400 rounded-2xl py-2 flex relative items-center">

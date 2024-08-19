@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Spinner } from "../../../../assets/Icons/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const SaveIcon = (props) => (
   <svg
@@ -19,6 +20,7 @@ const getCachedImg = async () => {
 export function SaveBtn({ isEmpty }) {
   const [loading, setLoading] = useState(false);
   const [isCached, setCheck] = useState(null);
+  const navigator = useNavigate();
   const isVisible =
     isEmpty !== null && !isEmpty && isCached !== null && !isCached;
   useEffect(() => {
@@ -30,7 +32,7 @@ export function SaveBtn({ isEmpty }) {
       await fetch(`${import.meta.env.VITE_API}/save/cached-image`, {
         credentials: "include",
       });
-      window.location.reload();
+      navigator("/dashboard");
     } catch (error) {
       console.log(error);
     } finally {
