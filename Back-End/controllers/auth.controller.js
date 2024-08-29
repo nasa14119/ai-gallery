@@ -97,6 +97,7 @@ export const deleteUser = async (req, res) => {
   if (!ImagesFound) return res.sendStatus(500);
   const userFound = await User.findByIdAndDelete(req.user.id);
   if (!userFound) return res.sendStatus(500);
+  await res.cookie("token", "", { expires: new Date(0) });
   res.status(200).json({ user: userFound.username });
 };
 export const validateToken = async (req, res) => {
