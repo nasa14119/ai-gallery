@@ -21,22 +21,18 @@ const ai_option_schema = new mongoose.Schema({
   bucket: {
     bucket_name: {
       type: String,
-      required: true,
       default: "",
     },
     endpoint: {
       type: String,
-      required: true,
       default: "",
     },
     accessKeyId: {
       type: String,
-      required: true,
       default: "",
     },
     secretAccessKey: {
       type: String,
-      required: true,
       default: "",
     },
   },
@@ -54,4 +50,4 @@ const ai_option_schema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Ai_options", ai_option_schema); 
+export default mongoose.model("Ai_options", ai_option_schema);
